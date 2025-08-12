@@ -170,20 +170,16 @@ export class MapController {
             console.error('❌ Error loading GeoJSON features:', event);
         });
         
-        // Debug: Check layer visibility and properties
+        // Simplified debug check (reduced to prevent loops)
         setTimeout(() => {
-            console.log('🔍 Layer debug info after 3 seconds:');
-            console.log('- LGA Layer visible:', lgaLayer.getVisible());
-            console.log('- LGA Layer opacity:', lgaLayer.getOpacity());
-            console.log('- Map layers count:', this.map.getLayers().getLength());
-            console.log('- Source state:', lgaSource.getState());
-            console.log('- Features in source:', lgaSource.getFeatures().length);
+            console.log('🔍 Layer status: visible=' + lgaLayer.getVisible() + ', features=' + lgaSource.getFeatures().length);
         }, 3000);
     }
 
     getLGAStyle(feature) {
-        // Debug: Track total style calls
+        // Debug: Track total style calls with rate limiting
         if (!this.styleCallCount) this.styleCallCount = 0;
+        if (!this.lastStyleLogTime) this.lastStyleLogTime = 0;
         this.styleCallCount++;
         
         // Try multiple possible property names for LGA name (OpenDataSoft format)
@@ -193,11 +189,13 @@ export class MapController {
                            feature.get('LGA_NAM');
         const council = this.findCouncilByName(councilName);
         
-        // Debug: Log first few styling calls with details
-        if (this.styleCallCount <= 5) {
+        // Debug: Rate limited logging (max once per second)
+        const now = Date.now();
+        if (this.styleCallCount <= 5 && now - this.lastStyleLogTime > 1000) {
             console.log(`🎨 Style call ${this.styleCallCount}: GIS name="${councilName}", Found council:`, council ? `${council.name} (${council.status})` : 'NOT FOUND');
             const props = feature.getProperties();
             console.log('Feature properties:', Object.keys(props).filter(k => k !== 'geometry'));
+            this.lastStyleLogTime = now;
         }
         
         if (!council) {
@@ -212,9 +210,7 @@ export class MapController {
                 })
             });
             
-            if (this.styleCallCount <= 5) {
-                console.log('🔘 Returning default style for unmapped council');
-            }
+            // Removed debug log to prevent console spam
             return defaultStyle;
         }
 
@@ -230,9 +226,7 @@ export class MapController {
             })
         });
         
-        if (this.styleCallCount <= 5) {
-            console.log(`🟢 Returning colored style: ${colors.fill} (${council.status})`);
-        }
+        // Removed debug log to prevent console spam
         
         return style;
     }
@@ -478,9 +472,7 @@ export class MapController {
                 }
             });
             
-            // Force a style refresh
-            console.log('🎨 Forcing layer style refresh...');
-            this.lgaLayer.getSource().changed();
+            // Note: Removed forced style refresh to prevent infinite loops
             
             // Check if layer is visible and has proper z-index
             console.log('👀 Layer visibility checks:');
@@ -493,10 +485,9 @@ export class MapController {
     }
 
     updateMapData() {
-        // Refresh the map styling based on current data
-        if (this.lgaLayer) {
-            this.lgaLayer.getSource().refresh();
-        }
+        // Note: Removed refresh() call to prevent infinite loops
+        // The layer should auto-update when data is loaded
+        console.log('📊 updateMapData called');
     }
 
     applyFilter(filter) {
