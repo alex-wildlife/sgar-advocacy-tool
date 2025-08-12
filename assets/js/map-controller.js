@@ -137,8 +137,34 @@ export class MapController {
         console.log('🌐 Loading GeoJSON from OpenDataSoft:', geoJsonUrl);
         
         const lgaSource = new ol.source.Vector({
-            format: new ol.format.GeoJSON(),
-            url: geoJsonUrl
+            loader: function() {
+                // Custom loader to handle geo_shape geometries
+                fetch(geoJsonUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const format = new ol.format.GeoJSON({
+                            dataProjection: 'EPSG:4326',
+                            featureProjection: 'EPSG:3857'
+                        });
+                        
+                        // Process each feature to use geo_shape instead of default geometry
+                        if (data.features) {
+                            data.features.forEach(feature => {
+                                if (feature.properties && feature.properties.geo_shape) {
+                                    // Replace the point geometry with the polygon geo_shape
+                                    feature.geometry = feature.properties.geo_shape;
+                                }
+                            });
+                        }
+                        
+                        const features = format.readFeatures(data);
+                        lgaSource.addFeatures(features);
+                        console.log(`🔄 Processed ${features.length} features with polygon geometries`);
+                    })
+                    .catch(error => {
+                        console.error('❌ Error loading or processing GeoJSON:', error);
+                    });
+            }
         });
 
         // Create layer for LGA boundaries
