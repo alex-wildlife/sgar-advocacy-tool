@@ -1,0 +1,290 @@
+/* Hero Section with modern gradient */
+.hero-section {
+    position: relative;
+    background: var(--gradient-hero);
+    padding: var(--space-3xl) 0 var(--space-2xl);
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -25%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(117, 177, 172, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+.hero-section h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: var(--neutral-900);
+    margin-bottom: var(--space-md);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.hero-section h1 span {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--neutral-600);
+    max-width: 800px;
+    margin: 0 auto var(--space-xl);
+    line-height: 1.6;
+}
+
+/* Main Content Layout */
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--space-lg);
+}
+
+/* Stats Dashboard Layout */
+.stats-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+/* Progress Section Layout */
+.progress-section {
+    background: white;
+    border-radius: 24px;
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.progress-container {
+    text-align: center;
+}
+
+.progress-milestones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+/* Controls Section Layout */
+.controls-section {
+    background: white;
+    border-radius: 20px;
+    padding: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.controls-container {
+    max-width: 100%;
+}
+
+.search-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.filter-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+/* Councils Section Layout */
+.councils-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.view-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+}
+
+.councils-container {
+    min-height: 400px;
+}
+
+.council-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-lg);
+}
+
+.council-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+/* Map Section Layout */
+.map-section {
+    background: white;
+    border-radius: 20px;
+    padding: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.map-container {
+    width: 100%;
+    height: 600px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Footer Layout */
+.footer {
+    background: var(--neutral-800);
+    color: var(--neutral-100);
+    padding: var(--space-xl) 0;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+}
+
+.footer-content p {
+    margin-bottom: var(--space-sm);
+}
+
+.footer-content p:last-child {
+    margin-bottom: 0;
+    opacity: 0.8;
+}
+
+/* Responsive Design - Mobile First */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 0 var(--space-md);
+    }
+    
+    .hero-section {
+        padding: var(--space-2xl) 0 var(--space-xl);
+    }
+    
+    .main-content {
+        padding: var(--space-xl) var(--space-md);
+    }
+    
+    .council-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+    
+    .stats-dashboard,
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+    }
+    
+    .progress-milestones {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+    
+    .search-controls {
+        gap: var(--space-md);
+    }
+    
+    .filter-buttons {
+        justify-content: center;
+    }
+    
+    .view-controls {
+        justify-content: center;
+        gap: var(--space-xs);
+    }
+    
+    .map-container {
+        height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-dashboard,
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .progress-section,
+    .controls-section,
+    .map-section {
+        margin: 0 -var(--space-md);
+        border-radius: 16px;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
+/* Large screens optimization */
+@media (min-width: 1200px) {
+    .council-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .search-controls {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .filter-controls {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-lg);
+    }
+}

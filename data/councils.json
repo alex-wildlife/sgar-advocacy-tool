@@ -1,0 +1,642 @@
+{
+    "ALBURY CITY": {
+        "sgars": "No",
+        "notes": "Albury City successfully completed transition away from SGARs in December 2024 to a non-anticoagulant product.",
+        "email": "council@alburycity.nsw.gov.au"
+    },
+    "ARMIDALE REGIONAL": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025; confirmed no participation in baiting programs in 2024.",
+        "email": "council@armidaleregional.nsw.gov.au"
+    },
+    "BALLINA": {
+        "sgars": "Unknown",
+        "notes": "We are seeking clarification on specific rodenticides used at managed buildings.",
+        "email": "council@ballina.nsw.gov.au"
+    },
+    "BALRANALD": {
+        "sgars": "Unknown",
+        "notes": "Balranald used commercial wax blocks (active ingredient unknown) at 3 facilities in October 2024; this program has concluded. We are seeking confirmation on rodenticides used.",
+        "email": "council@balranald.nsw.gov.au"
+    },
+    "BATHURST REGIONAL": {
+        "sgars": "Yes",
+        "notes": "Correspondence with Bathurst states they are 'not aware of any change' from 2024 practices, including the use of SGARs (Storm/flocoumafen and Ditrac/brodifacoum).",
+        "email": "council@bathurst.nsw.gov.au"
+    },
+    "BAYSIDE": {
+        "sgars": "No",
+        "notes": "Correspondence with Bayside states 'there will be rodent blitz programs [...] around areas identified with high level of rodent activities' and that these 'blitz programs' are mainly conducted during the warmer months when outdoor activities and BBQ use increases.",
+        "email": "council@bayside.nsw.gov.au"
+    },
+    "BEGA VALLEY": {
+        "sgars": "Yes",
+        "notes": "Bega Valley uses Ditrac (brodifacoum) as the contractor's preferred product. The program at John Gordon Reserve ended due to building upgrade.",
+        "email": "council@begavalley.nsw.gov.au"
+    },
+    "BELLINGEN": {
+        "sgars": "Unknown",
+        "notes": "Council does not undertake baiting or trapping; LLS handles most wildlife management.",
+        "email": "council@bellingen.nsw.gov.au"
+    },
+    "BERRIGAN": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025 activities.",
+        "email": "council@berrigan.nsw.gov.au"
+    },
+    "BLACKTOWN": {
+        "sgars": "Unknown",
+        "notes": "Council's Natural Areas Team does not engage in baiting. We are seeking confirmation from other departments (Facilities, Environmental Services, Contract Managers, Parks).",
+        "email": "council@blacktown.nsw.gov.au"
+    },
+    "BLAND": {
+        "sgars": "No",
+        "notes": "Rodenticides may have been used small scale in the past.",
+        "email": "council@bland.nsw.gov.au"
+    },
+    "BLAYNEY": {
+        "sgars": "Unknown",
+        "notes": "Blayney engages in shooting and sporadic use of Pindone for rabbits.",
+        "email": "council@blayney.nsw.gov.au"
+    },
+    "BLUE MOUNTAINS": {
+        "sgars": "No",
+        "notes": "Blue Mountains uses integrated pest management and only FGARs are used where necessary to minimise harm to wildlife. Council also engages in fox trapping and euthanasia.",
+        "email": "council@bmcc.nsw.gov.au"
+    },
+    "BOGAN": {
+        "sgars": "No",
+        "notes": "Bogan engages Termitrust for annual spraying and maintaining bait stations around buildings (Termite baits: Requiem and Trelona).",
+        "email": "council@bogan.nsw.gov.au"
+    },
+    "BOURKE": {
+        "sgars": "Yes",
+        "notes": "Bourke's pest control contractor places rodenticides containing flocoumafen (an SGAR) inside buildings where rodents reported.",
+        "email": "council@bourke.nsw.gov.au"
+    },
+    "BREWARRINA": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@brewarrina.nsw.gov.au"
+    },
+    "BROKEN HILL": {
+        "sgars": "No",
+        "notes": "No rodent control in facilities. Council manages foxes, cats, and goats in the Living Desert and culls wildlife hazards at airport using lethal/pyrotechnic rounds.",
+        "email": "council@brokenhill.nsw.gov.au"
+    },
+    "BURWOOD": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@burwood.nsw.gov.au"
+    },
+    "BYRON": {
+        "sgars": "No",
+        "notes": "Byron successfully implemented an SGAR-free policy in July 2022 for community halls.",
+        "email": "council@byron.nsw.gov.au"
+    },
+    "CABONNE": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025 on rodenticide use and planned programs (including pigeon/rabbit control).",
+        "email": "council@cabonne.nsw.gov.au"
+    },
+    "CAMDEN": {
+        "sgars": "No",
+        "notes": "A motion prohibiting use of SGARs on council land carried in August 2022. It effectively prohibits all baiting, including SGARs, on council land.",
+        "email": "council@camden.nsw.gov.au"
+    },
+    "CAMPBELLTOWN": {
+        "sgars": "No",
+        "notes": "Motion prohibiting use of SGARs on council land carried in August 2022. This motion effectively prohibits all baiting, including SGARs, on council land. Rodent control is treated on a case-by-case basis.",
+        "email": "council@campbelltown.nsw.gov.au"
+    },
+    "CANADA BAY": {
+        "sgars": "Yes",
+        "notes": "SGARs not used in open space. If used in buildings, SGARs are placed in lockable, tamper-resistant boxes. The specific SGARs used have not been confirmed.",
+        "email": "council@canadabay.nsw.gov.au"
+    },
+    "CANTERBURY-BANKSTOWN": {
+        "sgars": "Unknown",
+        "notes": "Council states all animal control activities are undertaken in accordance with Government guidelines. Council has requested a formal GIPA application for details.",
+        "email": "council@cbcity.nsw.gov.au"
+    },
+    "CARRATHOOL": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@carrathool.nsw.gov.au"
+    },
+    "CENTRAL COAST": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Fastrac Blox', containing brodifacoum (SGAR) in bait stations. Council also has planned 1080 baiting campaigns for foxes and dingoes.",
+        "email": "ask@centralcoast.nsw.gov.au"
+    },
+    "CENTRAL DARLING": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@centraldarling.nsw.gov.au"
+    },
+    "CESSNOCK": {
+        "sgars": "Unknown",
+        "notes": "Rodent baits are used in/around buildings through pest control contractor, specific product used not provided.",
+        "email": "council@cessnock.nsw.gov.au"
+    },
+    "CLARENCE VALLEY": {
+        "sgars": "No",
+        "notes": "Council resolved to only use FGARs 1-2 years ago.",
+        "email": "council@clarencevalley.nsw.gov.au"
+    },
+    "COBAR": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@cobar.nsw.gov.au"
+    },
+    "COFFS HARBOUR": {
+        "sgars": "Yes",
+        "notes": "Council's Holiday Parks contractor uses 'Talon XT Pro', containing brodifacoum (SGAR). Racumin, which contains coumatetralyl, is used in buildings when required.",
+        "email": "coffs.council@chcc.nsw.gov.au"
+    },
+    "COOLAMON": {
+        "sgars": "Yes",
+        "notes": "Council engages a certified contractor like Flick. Correspondence with Council was unable to provide specific rodenticides used by contractors.",
+        "email": "council@coolamon.nsw.gov.au"
+    },
+    "COONAMBLE": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@coonamble.nsw.gov.au"
+    },
+    "COOTAMUNDRA-GUNDAGAI REGIONAL": {
+        "sgars": "Unknown",
+        "notes": "Council uses traditional domestic rodenticides in facilities when required - we have been unable to confirm the specific rodenticides applied. LLS was previously used on a larger scale.",
+        "email": "council@cootamundra-gundagai.nsw.gov.au"
+    },
+    "COWRA": {
+        "sgars": "Unknown",
+        "notes": "Council engages in termite and ant control in and around buildings.",
+        "email": "cowra@cowra.nsw.gov.au"
+    },
+    "CUMBERLAND": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@cumberland.nsw.gov.au"
+    },
+    "DUBBO REGIONAL": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Contrac', containing bromadiolone (SGAR), in council buildings. These buildings include administration, theatres, depots, airports, libraries, visitor centres, aquatic, and waste facilities.",
+        "email": "council@dubbo.nsw.gov.au"
+    },
+    "DUNGOG": {
+        "sgars": "Unknown",
+        "notes": "Rodent baits are used in/around buildings through local pest control contractor, specific product used has not been provided.",
+        "email": "council@dungog.nsw.gov.au"
+    },
+    "EDWARD RIVER": {
+        "sgars": "No",
+        "notes": "Council has confirmed no use of rodenticides or planned pest control programs.",
+        "email": "council@edwardriver.nsw.gov.au"
+    },
+    "EUROBODALLA": {
+        "sgars": "Yes",
+        "notes": "SGARs are used inside buildings and Council considers this 'low risk'. Council's Invasive Species Team also uses Pindone for rabbit control.",
+        "email": "council@eurocoast.nsw.gov.au"
+    },
+    "FAIRFIELD": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@fairfieldcity.nsw.gov.au"
+    },
+    "FEDERATION": {
+        "sgars": "Yes",
+        "notes": "Council's pest control contractor uses 'Ditrac', containing brodifacoum (SGAR), for rodent control.",
+        "email": "council@federationcouncil.nsw.gov.au"
+    },
+    "FORBES": {
+        "sgars": "Yes",
+        "notes": "Council has confirmed that bromadiolone (SGAR) is used in bait stations.",
+        "email": "council@forbes.nsw.gov.au"
+    },
+    "GEORGES RIVER": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Contrac Blox', containing bromadiolone (SGAR), around its facilities.",
+        "email": "council@georgesriver.nsw.gov.au"
+    },
+    "GILGANDRA": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@gilgandra.nsw.gov.au"
+    },
+    "GLEN INNES SEVERN": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@gleninnessevern.nsw.gov.au"
+    },
+    "GOULBURN MULWAREE": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Ditrac', containing brodifacoum (SGAR), in sensitive buildings, including art galleries and museums).",
+        "email": "council@goulburn.nsw.gov.au"
+    },
+    "GREATER HUME SHIRE": {
+        "sgars": "Unknown",
+        "notes": "Council uses a 'standard rodenticide' - information about the specific product applied has not been provided.",
+        "email": "mail@greaterhume.nsw.gov.au"
+    },
+    "GRIFFITH": {
+        "sgars": "Unknown",
+        "notes": "Council confimed in 2024 that it does not use chemical pesticides for lethal control of wildlife. We are seeking confirmation that this remains accurate for 2025.",
+        "email": "city@griffith.nsw.gov.au"
+    },
+    "GUNNEDAH": {
+        "sgars": "Unknown",
+        "notes": "Council's contractor uses enclosed bait stations and a smart system to reduce reliance. The specific rodenticides applied has not been confirmed.",
+        "email": "council@gunnedah.nsw.gov.au"
+    },
+    "GWYDIR": {
+        "sgars": "Unknown",
+        "notes": "Council uses rodenticides in bait stations at some facilities. The specific product used has not been confirmed.",
+        "email": "council@gwydir.nsw.gov.au"
+    },
+    "HAWKESBURY": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Ditrac', containing brodifacoum (SGAR) in bait stations around facilities. Council has engaged in rabbit control using 1080 in the past.",
+        "email": "council@hawkesbury.nsw.gov.au"
+    },
+    "HAY": {
+        "sgars": "Unknown",
+        "notes": "Council stated that 'We have no comment to make'.",
+        "email": "council@hay.nsw.gov.au"
+    },
+    "HILLTOPS": {
+        "sgars": "No",
+        "notes": "Council has confirmed no use of rodenticides or planned programs.",
+        "email": "council@hilltops.nsw.gov.au"
+    },
+    "HORNSBY": {
+        "sgars": "No",
+        "notes": "Council's policy states that SGARs are never used. The rabbit cage trap lending program will continue in 2025 and Council may participate in RHDV release and use contract shooters for fox/rabbit control if grants are secured.",
+        "email": "hsc@hornsby.nsw.gov.au"
+    },
+    "HUNTERS HILL": {
+        "sgars": "Yes",
+        "notes": "Council's contractor (Rentokil) uses 'Ditrac' (brodifacoum), 'Contrac' (bromadiolone), and 'Maki Block' (bromadiolone) baits, all containing SGARs.",
+        "email": "council@huntershill.nsw.gov.au"
+    },
+    "INNER WEST": {
+        "sgars": "No",
+        "notes": "Council's Urban Ecology Manager has confirmed that no baiting or other control programs will be undertaken in 2025.",
+        "email": "council@innerwest.nsw.gov.au"
+    },
+    "INVERELL": {
+        "sgars": "Unknown",
+        "notes": "SGARs may be used in facilities, but specific products are currently unknown.",
+        "email": "council@inverell.nsw.gov.au"
+    },
+    "JUNEE": {
+        "sgars": "No",
+        "notes": "Council confirmed no rodenticide use in building management.",
+        "email": "junee@junee.nsw.gov.au"
+    },
+    "KEMPSEY": {
+        "sgars": "No",
+        "notes": "Council maintains that wildlife management is LLS responsibility.",
+        "email": "council@kempsey.nsw.gov.au"
+    },
+    "KIAMA": {
+        "sgars": "No",
+        "notes": "Council uses 'Selontra', containing colecalciferol, around buildings, and conducts reactive rabbit/fox control.",
+        "email": "council@kiama.nsw.gov.au"
+    },
+    "KU-RING-GAI": {
+        "sgars": "Unknown",
+        "notes": "Council requested a formal GIPA application to access information.",
+        "email": "council@kmc.nsw.gov.au"
+    },
+    "KYOGLE": {
+        "sgars": "Yes",
+        "notes": "Council's contractor, Flick uses SGARS at sewer/pump stations.",
+        "email": "council@kyogle.nsw.gov.au"
+    },
+    "LACHLAN": {
+        "sgars": "Yes",
+        "notes": "Council's contractor uses Tomcat All Weather Blox, containing bromadiolone (SGAR).",
+        "email": "council@lachlan.nsw.gov.au"
+    },
+    "LAKE MACQUARIE": {
+        "sgars": "No",
+        "notes": "Council successfully phased out 'Ditrac' from its internal store and is reviewing tenders to implement wildlife-friendly options for contractors.",
+        "email": "council@lakemac.com.au"
+    },
+    "LANE COVE": {
+        "sgars": "Yes",
+        "notes": "Council uses coumatetralyl (FGAR) and brodifacoum (SGAR) for rodent control.",
+        "email": "council@lanecove.nsw.gov.au"
+    },
+    "LEETON": {
+        "sgars": "Unknown",
+        "notes": "Council confirmed in 2024 that it does not conduct baiting or stock chemical pesticides. We are seeking confirmation for 2025.",
+        "email": "council@leeton.nsw.gov.au"
+    },
+    "LISMORE": {
+        "sgars": "Yes",
+        "notes": "Council's contractor, Flick, uses 'Ditrac' (brodifacoum), 'Contrac' (bromadiolone), and 'Generation First Strike' (difethialone).",
+        "email": "council@lismore.nsw.gov.au"
+    },
+    "LITHGOW CITY": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@lithgow.nsw.gov.au"
+    },
+    "LIVERPOOL": {
+        "sgars": "Yes",
+        "notes": "Council has confirmed use of brodifacoum (SGAR) in council buildings.",
+        "email": "council@liverpool.nsw.gov.au"
+    },
+    "LIVERPOOL PLAINS": {
+        "sgars": "Unknown",
+        "notes": "Rodenticides are used in facilities managed by property management section. Information on the specific rodenticides applied has not been provided.",
+        "email": "council@liverpoolplains.nsw.gov.au"
+    },
+    "LOCKHART": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@lockhart.nsw.gov.au"
+    },
+    "MAITLAND": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Contrac', containing bromadiolone (SGAR).",
+        "email": "council@maitland.nsw.gov.au"
+    },
+    "MID-COAST": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Fastrac Blox', containing brodifacoum (SGAR).",
+        "email": "council@midcoast.nsw.gov.au"
+    },
+    "MID-WESTERN REGIONAL": {
+        "sgars": "No",
+        "notes": "Council does not use rodenticides. There was a 'one-off' fox shooting program conducted in 2024.",
+        "email": "council@midwestern.nsw.gov.au"
+    },
+    "MOREE PLAINS": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation from Council's Building Maintenance team regarding rodenticide use in facilities and other control programs.",
+        "email": "council@mpsc.nsw.gov.au"
+    },
+    "MOSMAN": {
+        "sgars": "Yes",
+        "notes": "Council's contractor, Flick, uses brodifacoum. Council has acknowledged the potential secondary poisoning risk of using SGARs.",
+        "email": "council@mosman.nsw.gov.au"
+    },
+    "MURRAY RIVER": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Tomcat Blox', containing bromadiolone (SGAR).",
+        "email": "council@murrayriver.nsw.gov.au"
+    },
+    "MURRUMBIDGEE": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@murrumbidgee.nsw.gov.au"
+    },
+    "MUSWELLBROOK": {
+        "sgars": "Unknown",
+        "notes": "Council's contractor uses enclosed bait stations and a smart system to reduce reliance. The specific rodenticides used has not been confirmed.",
+        "email": "council@muswellbrook.nsw.gov.au"
+    },
+    "NAMBUCCA VALLEY": {
+        "sgars": "Yes",
+        "notes": "Council's contractor, Rentokil, uses 'Maki Block' (bromadiolone) and 'Ditrac' (brodifacoum), both containing SGARs.",
+        "email": "council@nambucca.nsw.gov.au"
+    },
+    "NARRABRI": {
+        "sgars": "Yes",
+        "notes": "Council's contractor uses 'Contrac', containing bromadiolone (SGAR).",
+        "email": "council@narrabri.nsw.gov.au"
+    },
+    "NARRANDERA": {
+        "sgars": "Unknown",
+        "notes": "Council confirmed in 2024 that it does not undertake baiting or wildlife control programs. We are seeking confirmation for 2025.",
+        "email": "info@narrandera.nsw.gov.au"
+    },
+    "NARROMINE": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Talon XT Pro' (brodifacoum), 'Ditrac' (brodifacoum), and 'Contrac' (bromadiolone), all containing SGARs.",
+        "email": "council@narromine.nsw.gov.au"
+    },
+    "NEWCASTLE": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025",
+        "email": "mail@ncc.nsw.gov.au"
+    },
+    "NORTH SYDNEY": {
+        "sgars": "Yes",
+        "notes": "Council's contractor uses coumatetralyl, cholecalciferol, bromadiolone, brodifacoum, difethialone, and FGARs. SGARs (bromadiolone, brodifacoum, difethialone) are used for short durations in commercial centres when needed.",
+        "email": "council@northsydney.nsw.gov.au"
+    },
+    "NORTHERN BEACHES": {
+        "sgars": "No",
+        "notes": "Council has a policy of not using SGARs in operations, which includes SGAR-free conditions in facility lease renewals.",
+        "email": "council@northernbeaches.nsw.gov.au"
+    },
+    "OBERON": {
+        "sgars": "No",
+        "notes": "Council has confirmed no use of rodenticides or planned programs.",
+        "email": "council@oberon.nsw.gov.au"
+    },
+    "ORANGE": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@orange.nsw.gov.au"
+    },
+    "PARKES": {
+        "sgars": "No",
+        "notes": "No rodenticides have been used recently due to lack of 'plague proportion' activity.",
+        "email": "council@parkes.nsw.gov.au"
+    },
+    "CITY OF PARRAMATTA": {
+        "sgars": "Yes",
+        "notes": "Council uses rodenticides in 3 buildings. The specific rodenticides and locations are considered 'commercial in confidence'. Council has continued its policy not to engage in 1080 poison baiting for foxes at Lake Parramatta Reserve in 2025.",
+        "email": "council@cityofparramatta.nsw.gov.au"
+    },
+    "PENRITH": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Ditrac', containing brodifacoum (SGAR).",
+        "email": "council@penrith.city"
+    },
+    "PORT MACQUARIE-HASTINGS": {
+        "sgars": "No",
+        "notes": "Council has been SGAR free since January 2022.",
+        "email": "council@pmhc.nsw.gov.au"
+    },
+    "PORT STEPHENS": {
+        "sgars": "No",
+        "notes": "Council uses 'SureFire Couma blocks', containing coumatetralyl (FGAR), in enclosed bait stations.",
+        "email": "council@portstephens.nsw.gov.au"
+    },
+    "QUEANBEYAN-PALERANG REGIONAL": {
+        "sgars": "No",
+        "notes": "Council has confirmed no use of rodenticides.",
+        "email": "council@qprc.nsw.gov.au"
+    },
+    "RANDWICK": {
+        "sgars": "Yes",
+        "notes": "Council has confirmed it uses SGARs.",
+        "email": "council@randwick.nsw.gov.au"
+    },
+    "RICHMOND VALLEY": {
+        "sgars": "Unknown",
+        "notes": "Council has confirmed that pest control contractors are used on an as need basis. We have been unable to confirm the specific rodenticides used.",
+        "email": "council@richmondvalley.nsw.gov.au"
+    },
+    "RYDE": {
+        "sgars": "Yes",
+        "notes": "Council uses racumin (FGAR), selontra (colecalciferol), 'Muskil Dual Active Rodenticide' (bromadiolone + difenacoum - SGARs).",
+        "email": "cityofryde@ryde.nsw.gov.au"
+    },
+    "SHELLHARBOUR": {
+        "sgars": "No",
+        "notes": "Council has confirmed no rodenticide use around facilities.",
+        "email": "council@shellharbour.nsw.gov.au"
+    },
+    "SHOALHAVEN": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@shoalhaven.nsw.gov.au"
+    },
+    "SINGLETON": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025",
+        "email": "council@singleton.nsw.gov.au"
+    },
+    "SNOWY MONARO REGIONAL": {
+        "sgars": "Unknown",
+        "notes": "Council has confirmed it uses registered rodenticides as required for staff/asset protection. We have been unable to confirm the specific rodenticides used.",
+        "email": "council@snowymonaro.nsw.gov.au"
+    },
+    "SNOWY VALLEYS": {
+        "sgars": "Unknown",
+        "notes": "Council confirmed no baiting operations in 2024. We are seeking confirmation for 2025.",
+        "email": "council@snowyvalleys.nsw.gov.au"
+    },
+    "STRATHFIELD": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@strathfield.nsw.gov.au"
+    },
+    "SUTHERLAND SHIRE": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025",
+        "email": "ssc@ssc.nsw.gov.au"
+    },
+    "SYDNEY": {
+        "sgars": "Yes",
+        "notes": "Council's contractor, Ventia, uses 'Contrac' (bromadiolone), 'Ditrac' (brodifacoum), 'Talon XT Pro' (brodifacoum), and 'Selontra' (colecalciferol) for rodent control in premises/facilities.",
+        "email": "council@cityofsydney.nsw.gov.au"
+    },
+    "TAMWORTH REGIONAL": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@tamworth.nsw.gov.au"
+    },
+    "TEMORA": {
+        "sgars": "No",
+        "notes": "Council has confirmed no use of rodenticides.",
+        "email": "council@temora.nsw.gov.au"
+    },
+    "TENTERFIELD": {
+        "sgars": "No",
+        "notes": "Council has confirmed no baiting operations or programmed rodent control.",
+        "email": "council@tenterfield.nsw.gov.au"
+    },
+    "THE HILLS SHIRE": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Generation First Strike' (difethialone), 'Maki Blocks/Bromard Paste' (bromadiolone), 'Ditrac Blox' (brodifacoum), and 'Selontra' (colecalciferol). Though Council stated that they do not use SGARs, several SGARs are listed in their product list.",
+        "email": "council@thehills.nsw.gov.au"
+    },
+    "TWEED": {
+        "sgars": "No",
+        "notes": "Council discontinued use of SGARs in 2023.",
+        "email": "tsc@tweed.nsw.gov.au"
+    },
+    "UPPER HUNTER": {
+        "sgars": "No",
+        "notes": "Council uses 'Racumin', containing coumatetralyl (FGAR), in bait stations.",
+        "email": "council@upperhunter.nsw.gov.au"
+    },
+    "UPPER LACHLAN SHIRE": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@upperlachlan.nsw.gov.au"
+    },
+    "URALLA": {
+        "sgars": "Unknown",
+        "notes": "Council confimed no control programs in 2024. We are seeking confirmation for 2025.",
+        "email": "council@uralla.nsw.gov.au"
+    },
+    "WAGGA WAGGA": {
+        "sgars": "Yes",
+        "notes": "Council uses 'Muskil Dual Active', containing difenacoum and bromadiolone (SGARs).",
+        "email": "council@wagga.nsw.gov.au"
+    },
+    "WALCHA": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@walcha.nsw.gov.au"
+    },
+    "WALGETT": {
+        "sgars": "Unknown",
+        "notes": "Council uses rodenticides in premises, but the specific products and locations have not been confirmed.",
+        "email": "council@walgett.nsw.gov.au"
+    },
+    "WARREN": {
+        "sgars": "Unknown",
+        "notes": "Council Uses traps primarily for rodents and used 'Mouse Off', containing zinc phosphide, during the 'mouse plague'.",
+        "email": "council@warren.nsw.gov.au"
+    },
+    "WARRUMBUNGLE": {
+        "sgars": "No",
+        "notes": "Council has confirmed it does not engage in baiting programs.",
+        "email": "council@warrumbungle.nsw.gov.au"
+    },
+    "WAVERLEY": {
+        "sgars": "Yes",
+        "notes": "Council's conntractor uses 'Generation First Strike' (difethialone) or 'Ditrac' (brodifacoum), both containing SGARs.",
+        "email": "council@waverley.nsw.gov.au"
+    },
+    "WEDDIN": {
+        "sgars": "No",
+        "notes": "Council confirmed it is currently not using rodenticides and does not have any planned programs.",
+        "email": "council@weddin.nsw.gov.au"
+    },
+    "WENTWORTH": {
+        "sgars": "No",
+        "notes": "Council confirmed no operations using SGARs or other planned wildlife control programs.",
+        "email": "council@wentworth.nsw.gov.au"
+    },
+    "WILLOUGHBY": {
+        "sgars": "No",
+        "notes": "Council has confirmed no SGAR use by its contractor.",
+        "email": "willoughby@willoughby.nsw.gov.au"
+    },
+    "WINGECARRIBEE": {
+        "sgars": "Yes",
+        "notes": "Council has confirmed it will use 'Ditrac Blox' (brodifacoum) and 'Big Cheese' (bromadiolone), both SGARs.",
+        "email": "mail@wsc.nsw.gov.au"
+    },
+    "WOLLONDILLY": {
+        "sgars": "No",
+        "notes": "Council implemented tender requirements restricting SGAR use, mandating FGARs unless explicitly approved.",
+        "email": "council@wollondilly.nsw.gov.au"
+    },
+    "WOLLONGONG": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025 on rodenticide use and planned changes for priority species control.",
+        "email": "council@wollongong.nsw.gov.au"
+    },
+    "WOOLLAHRA": {
+        "sgars": "No",
+        "notes": "Council has confirmed it uses electronic traps instead of rodenticides.",
+        "email": "council@woollahra.nsw.gov.au"
+    },
+    "YASS VALLEY": {
+        "sgars": "Unknown",
+        "notes": "We are seeking confirmation for 2025.",
+        "email": "council@yassvalley.nsw.gov.au"
+    }
+}
