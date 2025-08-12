@@ -348,31 +348,24 @@ export class MapController {
         }
         
         if (!council) {
-            // Default style for unmapped councils
+            // Default style for unmapped councils - minimal and unobtrusive
             const defaultStyle = new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: '#cccccc',
-                    width: 1
-                }),
                 fill: new ol.style.Fill({
-                    color: 'rgba(200, 200, 200, 0.1)'
+                    color: 'rgba(248, 249, 250, 0.4)' // Very light gray, barely visible
                 })
+                // No stroke/border for clean appearance
             });
             
-            // Removed debug log to prevent console spam
             return defaultStyle;
         }
 
         const colors = this.getStatusColors(council.status);
         
         const style = new ol.style.Style({
-            stroke: new ol.style.Stroke({
-                color: colors.border,
-                width: 2
-            }),
             fill: new ol.style.Fill({
                 color: colors.fill
             })
+            // No stroke/border for clean, impactful appearance
         });
         
         // Removed debug log to prevent console spam
@@ -397,23 +390,26 @@ export class MapController {
         });
     }
 
-    getStatusColors(status) {
+    getStatusColors(status, isHover = false) {
         switch (status) {
-            case 'Yes':
+            case 'Yes': // Using SGARs - Danger/Urgent red
                 return {
-                    fill: 'rgba(235, 73, 58, 0.3)',
-                    border: '#EB493A'
+                    fill: isHover ? 'rgba(220, 53, 69, 0.8)' : 'rgba(220, 53, 69, 0.7)',
+                    border: null, // No border for clean look
+                    hover: 'rgba(220, 53, 69, 0.85)'
                 };
-            case 'No':
+            case 'No': // SGAR-Free - Success/Safe green
                 return {
-                    fill: 'rgba(76, 175, 80, 0.3)',
-                    border: '#4CAF50'
+                    fill: isHover ? 'rgba(40, 167, 69, 0.8)' : 'rgba(40, 167, 69, 0.7)',
+                    border: null, // No border for clean look
+                    hover: 'rgba(40, 167, 69, 0.85)'
                 };
-            case 'Unknown':
+            case 'Unknown': // Status unknown - Neutral blue-gray
             default:
                 return {
-                    fill: 'rgba(255, 167, 38, 0.3)',
-                    border: '#FFA726'
+                    fill: isHover ? 'rgba(108, 117, 125, 0.7)' : 'rgba(108, 117, 125, 0.6)',
+                    border: null, // No border for clean look
+                    hover: 'rgba(108, 117, 125, 0.75)'
                 };
         }
     }
