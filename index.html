@@ -106,14 +106,17 @@
 
         <section class="councils-section">
             <div class="view-controls">
-                <button class="view-btn active" data-view="grid" id="grid-view-btn">
+                <button class="view-btn active" data-view="map" id="map-view-btn">
+                    <span>Map View</span>
+                </button>
+                <button class="view-btn" data-view="grid" id="grid-view-btn">
                     <span>Grid View</span>
                 </button>
                 <button class="view-btn" data-view="list" id="list-view-btn">
                     <span>List View</span>
                 </button>
             </div>
-            <div class="councils-container" id="councils-container">
+            <div class="councils-container" id="councils-container" style="display: none;">
                 <!-- Council cards will be dynamically generated here -->
             </div>
         </section>

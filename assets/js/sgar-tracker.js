@@ -50,7 +50,7 @@ export class SGARTracker {
             lastUpdated: "2025-01-22"
         }));
         
-        this.currentView = 'grid';
+        this.currentView = 'map';
         this.filters = {
             status: [],
             region: [],
@@ -66,10 +66,12 @@ export class SGARTracker {
         this.updateStats();
         this.animateNumbers();
         this.setupEventListeners();
-        this.renderCouncils();
         this.setupUnifiedSearch();
         this.setupViewToggle();
         this.initModalControls();
+        
+        // Set initial view to map
+        this.switchView(this.currentView);
     }
 
     updateStats() {
@@ -218,7 +220,27 @@ export class SGARTracker {
             btn.classList.toggle('active', btn.getAttribute('data-view') === view);
         });
         
-        this.renderCouncils();
+        // Show/hide appropriate content based on view
+        const councilsContainer = document.getElementById('councils-container');
+        const mapSection = document.getElementById('map-section');
+        
+        if (view === 'map') {
+            // Show map, hide councils container
+            if (councilsContainer) councilsContainer.style.display = 'none';
+            if (mapSection) mapSection.style.display = 'block';
+            
+            // Trigger map resize after showing (OpenLayers needs this)
+            if (this.mapController) {
+                setTimeout(() => this.mapController.resize(), 100);
+            }
+        } else {
+            // Show councils container, hide map
+            if (councilsContainer) councilsContainer.style.display = 'block';
+            if (mapSection) mapSection.style.display = 'none';
+            
+            // Render councils for grid/list view
+            this.renderCouncils();
+        }
     }
 
     renderCouncils() {
