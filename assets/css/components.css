@@ -146,6 +146,125 @@
     line-height: 1.2;
 }
 
+/* Pagination Controls */
+.pagination-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    border-top: 1px solid var(--neutral-200);
+    margin-top: var(--space-lg);
+}
+
+.pagination-info {
+    color: var(--neutral-600);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.pagination-btn {
+    padding: var(--space-sm) var(--space-md);
+    border: 2px solid var(--neutral-300);
+    background: white;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--neutral-600);
+    min-width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.05);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+}
+
+.page-number {
+    padding: var(--space-sm);
+    border: 2px solid var(--neutral-300);
+    background: white;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--neutral-600);
+    min-width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-number:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.05);
+}
+
+.page-number.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+.page-ellipsis {
+    padding: var(--space-sm);
+    color: var(--neutral-500);
+    min-width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .pagination-section {
+        gap: var(--space-sm);
+        padding: var(--space-md) 0;
+    }
+    
+    .pagination-controls {
+        gap: var(--space-xxs);
+    }
+    
+    .pagination-btn,
+    .page-number {
+        min-width: 36px;
+        height: 36px;
+        padding: var(--space-xs);
+        font-size: 0.9rem;
+    }
+    
+    .pagination-info {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+}
+
 /* Control Components */
 .control-title {
     font-size: 1.5rem;

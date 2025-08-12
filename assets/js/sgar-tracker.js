@@ -57,6 +57,11 @@ export class SGARTracker {
             search: '',
             quickFilter: null
         };
+        this.pagination = {
+            currentPage: 1,
+            cardsPerPage: this.getCardsPerPage(),
+            totalPages: 1
+        };
         this.mapController = null;
         this.uiController = null;
         this.init();
@@ -68,10 +73,30 @@ export class SGARTracker {
         this.setupEventListeners();
         this.setupUnifiedSearch();
         this.setupViewToggle();
+        this.setupPagination();
         this.initModalControls();
         
         // Set initial view to map
         this.switchView(this.currentView);
+        
+        // Handle responsive pagination
+        window.addEventListener('resize', () => {
+            this.pagination.cardsPerPage = this.getCardsPerPage();
+            if (this.currentView !== 'map') {
+                this.renderCouncils();
+            }
+        });
+    }
+
+    getCardsPerPage() {
+        const width = window.innerWidth;
+        if (width >= 1024) {
+            return 24; // Desktop: 4 columns × 6 rows
+        } else if (width >= 768) {
+            return 18; // Tablet: 3 columns × 6 rows
+        } else {
+            return 12; // Mobile: 2 columns × 6 rows
+        }
     }
 
     updateStats() {
@@ -148,13 +173,14 @@ export class SGARTracker {
     }
 
     applyFilter(filterType) {
-        // Reset filters
+        // Reset filters and pagination
         this.filters = {
             status: [],
             region: [],
             search: '',
             quickFilter: filterType
         };
+        this.pagination.currentPage = 1;
 
         // Update filter buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -249,17 +275,34 @@ export class SGARTracker {
 
         const filteredCouncils = this.getFilteredCouncils();
         
+        // Update pagination info
+        this.pagination.totalPages = Math.ceil(filteredCouncils.length / this.pagination.cardsPerPage);
+        
+        // Ensure current page is valid
+        if (this.pagination.currentPage > this.pagination.totalPages) {
+            this.pagination.currentPage = 1;
+        }
+        
+        // Get councils for current page
+        const startIndex = (this.pagination.currentPage - 1) * this.pagination.cardsPerPage;
+        const endIndex = startIndex + this.pagination.cardsPerPage;
+        const paginatedCouncils = filteredCouncils.slice(startIndex, endIndex);
+        
         if (this.currentView === 'grid') {
             container.className = 'councils-container council-grid';
-            container.innerHTML = filteredCouncils.map(council => 
+            container.innerHTML = paginatedCouncils.map(council => 
                 this.createCouncilCard(council)
             ).join('');
         } else {
             container.className = 'councils-container council-list';
+            // List view doesn't use pagination - show all results
             container.innerHTML = filteredCouncils.map(council => 
                 this.createCouncilListItem(council)
             ).join('');
         }
+        
+        // Update pagination controls
+        this.updatePaginationControls(filteredCouncils.length);
     }
 
     getFilteredCouncils() {
@@ -463,6 +506,128 @@ export class SGARTracker {
         
         if (this.uiController) {
             this.uiController.showSuccessMessage(`${filteredCouncils.length} councils exported successfully`);
+        }
+    }
+
+    setupPagination() {
+        const prevBtn = document.getElementById('prev-page');
+        const nextBtn = document.getElementById('next-page');
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (this.pagination.currentPage > 1) {
+                    this.pagination.currentPage--;
+                    this.renderCouncils();
+                }
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (this.pagination.currentPage < this.pagination.totalPages) {
+                    this.pagination.currentPage++;
+                    this.renderCouncils();
+                }
+            });
+        }
+
+        // Event delegation for page number buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('page-number')) {
+                const page = parseInt(e.target.getAttribute('data-page'));
+                this.goToPage(page);
+            }
+        });
+    }
+
+    updatePaginationControls(totalResults) {
+        const paginationSection = document.getElementById('pagination-section');
+        const counter = document.getElementById('pagination-counter');
+        const pageNumbers = document.getElementById('page-numbers');
+        const prevBtn = document.getElementById('prev-page');
+        const nextBtn = document.getElementById('next-page');
+
+        if (!paginationSection) return;
+
+        // Show/hide pagination based on view and results
+        if (this.currentView === 'grid' && totalResults > 0) {
+            paginationSection.style.display = 'block';
+        } else {
+            paginationSection.style.display = 'none';
+            return;
+        }
+
+        // Update counter
+        if (counter) {
+            const startItem = (this.pagination.currentPage - 1) * this.pagination.cardsPerPage + 1;
+            const endItem = Math.min(this.pagination.currentPage * this.pagination.cardsPerPage, totalResults);
+            counter.textContent = `Showing ${startItem}-${endItem} of ${totalResults} councils`;
+        }
+
+        // Update page numbers
+        if (pageNumbers) {
+            pageNumbers.innerHTML = this.generatePageNumbers();
+        }
+
+        // Update navigation buttons
+        if (prevBtn) {
+            prevBtn.disabled = this.pagination.currentPage <= 1;
+        }
+        if (nextBtn) {
+            nextBtn.disabled = this.pagination.currentPage >= this.pagination.totalPages;
+        }
+    }
+
+    generatePageNumbers() {
+        const { currentPage, totalPages } = this.pagination;
+        const pageNumbers = [];
+        
+        // Always show first page
+        if (totalPages > 1) {
+            pageNumbers.push(1);
+        }
+        
+        // Add ellipsis if needed
+        if (currentPage > 3) {
+            pageNumbers.push('...');
+        }
+        
+        // Add pages around current page
+        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+            if (!pageNumbers.includes(i)) {
+                pageNumbers.push(i);
+            }
+        }
+        
+        // Add ellipsis if needed
+        if (currentPage < totalPages - 2) {
+            pageNumbers.push('...');
+        }
+        
+        // Always show last page
+        if (totalPages > 1 && !pageNumbers.includes(totalPages)) {
+            pageNumbers.push(totalPages);
+        }
+
+        return pageNumbers.map(page => {
+            if (page === '...') {
+                return '<span class="page-ellipsis">...</span>';
+            } else {
+                const isActive = page === currentPage;
+                return `<button class="page-number ${isActive ? 'active' : ''}" 
+                               data-page="${page}" 
+                               aria-label="Go to page ${page}"
+                               ${isActive ? 'aria-current="page"' : ''}>
+                               ${page}
+                        </button>`;
+            }
+        }).join('');
+    }
+
+    goToPage(page) {
+        if (page >= 1 && page <= this.pagination.totalPages) {
+            this.pagination.currentPage = page;
+            this.renderCouncils();
         }
     }
 }
