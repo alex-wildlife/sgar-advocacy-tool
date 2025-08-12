@@ -124,11 +124,26 @@
     align-items: center;
     justify-content: center;
     transition: all var(--transition-base);
+    font-size: 1.5rem;
 }
 
 .milestone.achieved .milestone-marker {
     background: var(--gradient-success);
     color: white;
+}
+
+.milestone h4 {
+    margin: var(--space-xs) 0 var(--space-xxs);
+    color: var(--neutral-700);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.milestone p {
+    margin: 0;
+    color: var(--neutral-500);
+    font-size: 0.75rem;
+    line-height: 1.2;
 }
 
 /* Control Components */
@@ -193,6 +208,46 @@
     background: var(--primary);
     color: white;
     box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+/* SGAR Status-specific filter button colors */
+.filter-btn[data-filter="using-sgars"]:hover {
+    border-color: #CD3C3C;
+    color: #CD3C3C;
+    background: rgba(205, 60, 60, 0.05);
+}
+
+.filter-btn[data-filter="using-sgars"].active {
+    border-color: #CD3C3C;
+    background: #CD3C3C;
+    color: white;
+    box-shadow: 0 4px 12px rgba(205, 60, 60, 0.3);
+}
+
+.filter-btn[data-filter="sgar-free"]:hover {
+    border-color: #4CAF50;
+    color: #4CAF50;
+    background: rgba(76, 175, 80, 0.05);
+}
+
+.filter-btn[data-filter="sgar-free"].active {
+    border-color: #4CAF50;
+    background: #4CAF50;
+    color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.filter-btn[data-filter="unknown"]:hover {
+    border-color: #FFA726;
+    color: #FFA726;
+    background: rgba(255, 167, 38, 0.05);
+}
+
+.filter-btn[data-filter="unknown"].active {
+    border-color: #FFA726;
+    background: #FFA726;
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 167, 38, 0.3);
 }
 
 .filter-name {
