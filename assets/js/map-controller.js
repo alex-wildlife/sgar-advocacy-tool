@@ -55,7 +55,7 @@ export class MapController {
                 maxZoom: 12
             }),
             controls: ol.control.defaults({
-                attributionOptions: {
+                attribution: {
                     collapsible: false
                 }
             })
@@ -134,7 +134,7 @@ export class MapController {
                        `outputFormat=application/json&srsname=EPSG:3857&` +
                        `bbox=${extent.join(',')},EPSG:3857`;
             },
-            strategy: ol.loadingstrategy.bbox
+            strategy: ol.loadingstrategy.all
         });
 
         // Create layer for LGA boundaries
