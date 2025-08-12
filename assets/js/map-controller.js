@@ -50,11 +50,19 @@ export class MapController {
         
         // Create map with default interactions but disable scroll wheel zoom
         // Keep pinch zoom for mobile devices
-        const interactions = ol.interaction.defaults({
-            mouseWheelZoom: false, // Disable default scroll wheel zoom
-            pinchZoom: true,       // Keep pinch zoom for mobile
-            doubleClickZoom: true  // Keep double-click zoom
-        });
+        const interactions = new ol.Collection();
+        
+        // Add default interactions manually, excluding mouseWheelZoom
+        interactions.extend([
+            new ol.interaction.DragRotate(),
+            new ol.interaction.DragPan(),
+            new ol.interaction.PinchRotate(),
+            new ol.interaction.PinchZoom(),
+            new ol.interaction.KeyboardPan(),
+            new ol.interaction.KeyboardZoom(),
+            new ol.interaction.DragZoom(),
+            new ol.interaction.DoubleClickZoom()
+        ]);
         
         // Create the map instance
         this.map = new ol.Map({
