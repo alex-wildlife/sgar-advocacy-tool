@@ -20,6 +20,11 @@ export class MapController {
         this.createMap();
         this.createPopup();
         await this.loadNameMapping();
+        
+        // Debug: Log council data info
+        console.log(`MapController initialized with ${this.councils.length} councils`);
+        console.log('Sample council names:', this.councils.slice(0, 5).map(c => `"${c.name}" (${c.status})`));
+        
         this.loadCouncilBoundaries();
         this.setupMapControls();
     }
@@ -151,11 +156,21 @@ export class MapController {
         wfsSource.on('featuresloadend', () => {
             this.onBoundariesLoaded();
         });
+        
+        // Debug: Add error handling for WFS loading
+        wfsSource.on('featuresloaderror', (event) => {
+            console.error('Error loading WFS features:', event);
+        });
     }
 
     getLGAStyle(feature) {
         const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name');
         const council = this.findCouncilByName(councilName);
+        
+        // Debug: Log styling decisions for first few features
+        if (Math.random() < 0.05) { // Only log ~5% of features to avoid spam
+            console.log(`Styling feature with GIS name: "${councilName}", Found council:`, council ? `${council.name} (${council.status})` : 'NOT FOUND');
+        }
         
         if (!council) {
             return new ol.style.Style({
@@ -246,9 +261,15 @@ export class MapController {
             // Try exact match with mapping
             if (reverseMapping[gisName]) {
                 const ourName = reverseMapping[gisName];
-                return this.councils.find(council => 
-                    council.name.toUpperCase() === ourName.toUpperCase()
-                );
+                const foundCouncil = this.councils.find(council => {
+                    // Compare both the title case name and the uppercase version
+                    return council.name.toUpperCase() === ourName.toUpperCase() ||
+                           council.name.toUpperCase().replace(/\s+/g, ' ') === ourName.toUpperCase().replace(/\s+/g, ' ');
+                });
+                if (foundCouncil) {
+                    console.log(`Found council via mapping: GIS="${gisName}" -> Our="${ourName}" -> Council="${foundCouncil.name}" (${foundCouncil.status})`);
+                }
+                return foundCouncil;
             }
         }
         
@@ -374,6 +395,20 @@ export class MapController {
 
     onBoundariesLoaded() {
         console.log('NSW LGA boundaries loaded successfully');
+        
+        // Debug: Check what features were loaded
+        if (this.lgaLayer) {
+            const features = this.lgaLayer.getSource().getFeatures();
+            console.log(`Loaded ${features.length} LGA features`);
+            
+            // Sample some feature names for debugging
+            features.slice(0, 5).forEach((feature, index) => {
+                const name = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name');
+                const council = this.findCouncilByName(name);
+                console.log(`Feature ${index}: GIS name="${name}", Found council:`, council ? council.name : 'NOT FOUND');
+            });
+        }
+        
         this.updateMapData();
     }
 
