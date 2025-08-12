@@ -329,6 +329,51 @@ export class SGARTracker {
         });
     }
 
+    createActionButton(council) {
+        const { status, contactEmail, name } = council;
+        
+        // Define button properties based on status
+        let buttonText, buttonClass, subject, body, ariaLabel;
+        
+        switch (status) {
+            case 'Yes': // Using SGARs
+                buttonText = '📧 Take Action';
+                buttonClass = 'action-btn-danger';
+                subject = `Urgent: Stop Using Harmful SGARs - Protect NSW Wildlife`;
+                body = `Dear ${name} Council,\n\nI am writing to urge you to immediately stop using Second Generation Anticoagulant Rodenticides (SGARs) in your pest control programs.\n\nSGARs pose severe risks to NSW wildlife through secondary poisoning, affecting native birds, mammals, and reptiles. Many councils across NSW have successfully transitioned to safer alternatives.\n\nPlease join them in protecting our precious wildlife by:\n1. Reviewing your current rodenticide policy\n2. Transitioning to non-anticoagulant alternatives\n3. Publishing your pest control methods for transparency\n\nOur wildlife depends on your leadership.\n\nThank you for considering this urgent request.\n\nSincerely,`;
+                ariaLabel = `Contact ${name} to urge them to stop using SGARs`;
+                break;
+                
+            case 'No': // SGAR-free
+                buttonText = '📧 Thank Council';
+                buttonClass = 'action-btn-success';
+                subject = `Thank You for Protecting NSW Wildlife - SGAR-Free Policy`;
+                body = `Dear ${name} Council,\n\nThank you for your leadership in protecting NSW wildlife by maintaining a SGAR-free pest control policy.\n\nYour commitment to avoiding Second Generation Anticoagulant Rodenticides demonstrates environmental responsibility and sets an excellent example for other councils across NSW.\n\nBy choosing safer alternatives, you are:\n1. Protecting native birds, mammals, and reptiles from secondary poisoning\n2. Maintaining healthy ecosystems in your local area\n3. Leading by example for other councils\n\nPlease continue this important work and consider sharing your success story to inspire other councils.\n\nWith sincere appreciation,`;
+                ariaLabel = `Thank ${name} for their SGAR-free policy`;
+                break;
+                
+            default: // Unknown status
+                buttonText = '📧 Request Transparency';
+                buttonClass = 'action-btn-warning';
+                subject = `Request for Transparency: Rodenticide Policy Information`;
+                body = `Dear ${name} Council,\n\nI am writing to request transparency regarding your current rodenticide and pest control policies.\n\nAs a concerned resident/advocate, I would like to understand:\n1. What rodenticides (if any) does your council currently use?\n2. Do you use Second Generation Anticoagulant Rodenticides (SGARs)?\n3. What is your policy regarding wildlife-safe pest control alternatives?\n4. Are you considering transitioning to non-anticoagulant alternatives?\n\nThis information is important for understanding how local councils are protecting NSW wildlife from the harmful effects of SGARs through secondary poisoning.\n\nI would appreciate a clear response regarding your current practices and any plans for wildlife-safe alternatives.\n\nThank you for your time and consideration.\n\nSincerely,`;
+                ariaLabel = `Request transparency from ${name} about their rodenticide policy`;
+                break;
+        }
+        
+        // Encode the mailto link
+        const mailtoLink = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        return `
+            <a href="${mailtoLink}" 
+               class="council-action-btn ${buttonClass}"
+               aria-label="${ariaLabel}"
+               title="${ariaLabel}">
+               ${buttonText}
+            </a>
+        `;
+    }
+
     createCouncilCard(council) {
         const statusInfo = formatCouncilStatus(council.status);
         const statusClass = statusInfo.class;
@@ -345,8 +390,8 @@ export class SGARTracker {
                 </div>
                 <div class="council-card-body">
                     <div class="council-notes">${council.notes}</div>
-                    <div class="council-contact">
-                        📧 <a href="mailto:${council.contactEmail}">${council.contactEmail}</a>
+                    <div class="council-action">
+                        ${this.createActionButton(council)}
                     </div>
                 </div>
             </article>
@@ -367,8 +412,8 @@ export class SGARTracker {
                         ${statusIcon} ${statusInfo.text}
                     </span>
                 </div>
-                <div class="council-contact">
-                    <a href="mailto:${council.contactEmail}" class="council-action-btn">Contact</a>
+                <div class="council-action">
+                    ${this.createActionButton(council)}
                 </div>
             </article>
         `;

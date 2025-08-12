@@ -541,14 +541,75 @@
     transition: all var(--transition-fast);
     color: var(--neutral-700);
     font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
 }
 
 .council-action-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    background: rgba(var(--primary-rgb), 0.05);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
 }
 
+/* Status-specific action button styles */
+.council-action-btn.action-btn-danger {
+    border-color: #CD3C3C;
+    background: #CD3C3C;
+    color: white;
+}
+
+.council-action-btn.action-btn-danger:hover {
+    background: #b63529;
+    border-color: #b63529;
+    color: white;
+    box-shadow: 0 4px 12px rgba(205, 60, 60, 0.3);
+}
+
+.council-action-btn.action-btn-danger:focus {
+    outline: 2px solid #CD3C3C;
+    outline-offset: 2px;
+}
+
+.council-action-btn.action-btn-success {
+    border-color: #4CAF50;
+    background: #4CAF50;
+    color: white;
+}
+
+.council-action-btn.action-btn-success:hover {
+    background: #45a049;
+    border-color: #45a049;
+    color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.council-action-btn.action-btn-success:focus {
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+}
+
+.council-action-btn.action-btn-warning {
+    border-color: #FFA726;
+    background: #FFA726;
+    color: white;
+}
+
+.council-action-btn.action-btn-warning:hover {
+    background: #ff9800;
+    border-color: #ff9800;
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 167, 38, 0.3);
+}
+
+.council-action-btn.action-btn-warning:focus {
+    outline: 2px solid #FFA726;
+    outline-offset: 2px;
+}
+
+/* Legacy primary button styles */
 .council-action-btn.primary {
     border-color: var(--primary);
     background: var(--primary);
