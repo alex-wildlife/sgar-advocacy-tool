@@ -306,6 +306,46 @@
     color: var(--neutral-500);
 }
 
+/* Filter Controls Header */
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+}
+
+/* Clear Filters Button */
+.clear-filters-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-md);
+    background: transparent;
+    border: 1px solid var(--neutral-300);
+    border-radius: 8px;
+    color: var(--neutral-600);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.clear-filters-btn:hover {
+    background: rgba(var(--danger-rgb), 0.05);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.clear-filters-btn:focus {
+    outline: 2px solid var(--danger);
+    outline-offset: 2px;
+}
+
+.clear-filters-btn span:first-child {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
 /* Filter Buttons */
 .filter-btn {
     padding: var(--space-sm) var(--space-lg);

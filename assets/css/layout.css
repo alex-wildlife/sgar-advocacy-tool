@@ -238,6 +238,16 @@
         justify-content: center;
     }
     
+    .filter-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+    
+    .clear-filters-btn {
+        align-self: flex-end;
+    }
+    
     .view-controls {
         justify-content: center;
         gap: var(--space-xs);

@@ -79,6 +79,9 @@ export class SGARTracker {
         // Set initial view to map
         this.switchView(this.currentView);
         
+        // Initialize clear filters button visibility
+        this.updateClearFiltersVisibility();
+        
         // Handle responsive pagination
         window.addEventListener('resize', () => {
             this.pagination.cardsPerPage = this.getCardsPerPage();
@@ -170,6 +173,14 @@ export class SGARTracker {
                 this.applyFilter(filter);
             });
         });
+
+        // Set up clear filters button listener
+        const clearFiltersBtn = document.getElementById('clear-filters-btn');
+        if (clearFiltersBtn) {
+            clearFiltersBtn.addEventListener('click', () => {
+                this.clearAllFilters();
+            });
+        }
     }
 
     applyFilter(filterType) {
@@ -209,6 +220,9 @@ export class SGARTracker {
         if (this.mapController) {
             this.mapController.applyFilter(this.filters);
         }
+
+        // Update clear filters button visibility
+        this.updateClearFiltersVisibility();
     }
 
     setupUnifiedSearch() {
@@ -224,6 +238,9 @@ export class SGARTracker {
             if (this.mapController) {
                 this.mapController.applyFilter(this.filters);
             }
+
+            // Update clear filters button visibility
+            this.updateClearFiltersVisibility();
         });
     }
 
@@ -674,5 +691,62 @@ export class SGARTracker {
             this.pagination.currentPage = page;
             this.renderCouncils();
         }
+    }
+
+    clearAllFilters() {
+        // Reset all filters to default state
+        this.filters = {
+            status: [],
+            region: [],
+            search: '',
+            quickFilter: null
+        };
+        
+        // Reset pagination
+        this.pagination.currentPage = 1;
+
+        // Clear search input
+        const searchInput = document.getElementById('council-search');
+        if (searchInput) {
+            searchInput.value = '';
+        }
+
+        // Reset filter buttons to "All" active state
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-filter') === 'all');
+        });
+
+        // Render councils with cleared filters
+        this.renderCouncils();
+        
+        // Update map if controller is available
+        if (this.mapController) {
+            this.mapController.applyFilter(this.filters);
+        }
+
+        // Hide clear filters button
+        this.updateClearFiltersVisibility();
+    }
+
+    updateClearFiltersVisibility() {
+        const clearFiltersBtn = document.getElementById('clear-filters-btn');
+        if (!clearFiltersBtn) return;
+
+        // Check if any filters are active
+        const hasActiveFilters = 
+            this.filters.search.length > 0 ||
+            this.filters.status.length > 0 ||
+            this.filters.region.length > 0 ||
+            (this.filters.quickFilter && this.filters.quickFilter !== 'all');
+
+        // Show/hide button based on active filters
+        clearFiltersBtn.style.display = hasActiveFilters ? 'inline-flex' : 'none';
+    }
+
+    hasActiveFilters() {
+        return this.filters.search.length > 0 ||
+               this.filters.status.length > 0 ||
+               this.filters.region.length > 0 ||
+               (this.filters.quickFilter && this.filters.quickFilter !== 'all');
     }
 }
