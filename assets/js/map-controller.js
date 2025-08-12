@@ -133,7 +133,7 @@ export class MapController {
 
         // Load NSW LGA boundaries from OpenDataSoft (reliable alternative)
         // Using official Australian LGA data filtered for NSW only
-        const geoJsonUrl = 'https://data.opendatasoft.com/api/records/1.0/search/?dataset=georef-australia-local-government-area@public&q=NSW&format=geojson&rows=200';
+        const geoJsonUrl = 'https://data.opendatasoft.com/api/records/1.0/search/?dataset=georef-australia-local-government-area@public&refine.ste_name=New%20South%20Wales&format=geojson&rows=200';
         console.log('🌐 Loading GeoJSON from OpenDataSoft:', geoJsonUrl);
         
         const lgaSource = new ol.source.Vector({
