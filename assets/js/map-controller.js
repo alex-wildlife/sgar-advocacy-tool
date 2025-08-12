@@ -44,9 +44,22 @@ export class MapController {
     }
 
     createMap() {
+        // Initialize key state tracking
+        this.isCtrlPressed = false;
+        this.isScrollZoomEnabled = false;
+        
+        // Create map with default interactions but disable scroll wheel zoom
+        // Keep pinch zoom for mobile devices
+        const interactions = ol.interaction.defaults({
+            mouseWheelZoom: false, // Disable default scroll wheel zoom
+            pinchZoom: true,       // Keep pinch zoom for mobile
+            doubleClickZoom: true  // Keep double-click zoom
+        });
+        
         // Create the map instance
         this.map = new ol.Map({
             target: 'map',
+            interactions: interactions,
             layers: [
                 // Base tile layer - OpenStreetMap
                 new ol.layer.Tile({
@@ -67,6 +80,9 @@ export class MapController {
                 new ol.control.Zoom()
             ]
         });
+        
+        // Set up scroll zoom control
+        this.setupScrollZoomControl();
 
         // Zoom control is already included in the default controls above
 
@@ -82,6 +98,113 @@ export class MapController {
         this.map.on('pointermove', (evt) => {
             this.handlePointerMove(evt);
         });
+    }
+
+    setupScrollZoomControl() {
+        const mapElement = document.getElementById('map');
+        if (!mapElement) return;
+
+        // Create conditional scroll wheel zoom interaction
+        this.scrollWheelZoom = new ol.interaction.MouseWheelZoom({
+            condition: () => this.isCtrlPressed
+        });
+        
+        // Add the interaction to the map
+        this.map.addInteraction(this.scrollWheelZoom);
+
+        // Track Ctrl/Cmd key state globally
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                this.isCtrlPressed = true;
+                this.hideZoomHint();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (!e.ctrlKey && !e.metaKey) {
+                this.isCtrlPressed = false;
+            }
+        });
+
+        // Handle wheel events on the map for showing zoom hint (desktop only)
+        mapElement.addEventListener('wheel', () => {
+            if (!this.isCtrlPressed && !this.isMobile) {
+                // Show zoom hint when user tries to scroll without Ctrl on desktop
+                this.showZoomHint();
+                // Hide hint after 2 seconds
+                this.scheduleHideZoomHint();
+            }
+        }, { passive: true });
+
+        // Create zoom hint overlay
+        this.createZoomHint();
+    }
+
+    createZoomHint() {
+        const mapContainer = document.getElementById('map');
+        if (!mapContainer) return;
+
+        // Detect mobile devices
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                         (navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
+
+        // Create zoom hint element with appropriate message
+        this.zoomHint = document.createElement('div');
+        this.zoomHint.className = 'map-zoom-hint';
+        
+        if (isMobile) {
+            this.zoomHint.innerHTML = `
+                <div class="zoom-hint-content">
+                    <span class="zoom-hint-icon">👆</span>
+                    <span class="zoom-hint-text">Pinch to zoom</span>
+                </div>
+            `;
+        } else {
+            this.zoomHint.innerHTML = `
+                <div class="zoom-hint-content">
+                    <span class="zoom-hint-icon">🖱️</span>
+                    <span class="zoom-hint-text">Hold <kbd>Ctrl</kbd> + scroll to zoom</span>
+                </div>
+            `;
+        }
+        
+        this.zoomHint.style.display = 'none';
+        
+        // Add to map container
+        mapContainer.appendChild(this.zoomHint);
+        
+        // Store mobile state for later use
+        this.isMobile = isMobile;
+    }
+
+    showZoomHint() {
+        if (this.zoomHint && !this.isCtrlPressed) {
+            this.zoomHint.style.display = 'flex';
+            this.zoomHint.classList.add('zoom-hint-visible');
+        }
+    }
+
+    hideZoomHint() {
+        if (this.zoomHint) {
+            this.zoomHint.classList.remove('zoom-hint-visible');
+            setTimeout(() => {
+                if (this.zoomHint) {
+                    this.zoomHint.style.display = 'none';
+                }
+            }, 300);
+        }
+    }
+
+    scheduleHideZoomHint() {
+        // Clear existing timeout
+        if (this.zoomHintTimeout) {
+            clearTimeout(this.zoomHintTimeout);
+        }
+        
+        // Set new timeout to hide hint
+        this.zoomHintTimeout = setTimeout(() => {
+            this.hideZoomHint();
+        }, 2000);
     }
 
     createPopup() {
@@ -575,6 +698,16 @@ export class MapController {
     }
 
     destroy() {
+        // Clear zoom hint timeout
+        if (this.zoomHintTimeout) {
+            clearTimeout(this.zoomHintTimeout);
+        }
+        
+        // Remove zoom hint element
+        if (this.zoomHint && this.zoomHint.parentNode) {
+            this.zoomHint.parentNode.removeChild(this.zoomHint);
+        }
+        
         if (this.map) {
             this.map.dispose();
             this.map = null;

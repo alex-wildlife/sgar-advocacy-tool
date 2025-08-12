@@ -243,6 +243,106 @@
     animation: spin 1s ease-in-out infinite;
 }
 
+/* Map Zoom Hint Overlay */
+.map-zoom-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1002;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.map-zoom-hint.zoom-hint-visible {
+    opacity: 1;
+}
+
+.zoom-hint-content {
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-weight: 500;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow-xl);
+    backdrop-filter: blur(var(--blur-sm));
+    animation: zoomHintPulse 0.3s ease-out;
+}
+
+.zoom-hint-icon {
+    font-size: 1.2rem;
+}
+
+.zoom-hint-text kbd {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    font-family: inherit;
+}
+
+@keyframes zoomHintPulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Enhanced Zoom Controls */
+.ol-zoom {
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(var(--blur-sm));
+    border: 1px solid var(--neutral-200);
+}
+
+.ol-zoom button {
+    background: transparent;
+    color: var(--neutral-700);
+    border: none;
+    border-bottom: 1px solid var(--neutral-200);
+    font-size: 1.2rem;
+    font-weight: 600;
+    width: 36px;
+    height: 36px;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ol-zoom button:last-child {
+    border-bottom: none;
+}
+
+.ol-zoom button:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.ol-zoom button:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
 /* Map Responsive Design */
 @media (max-width: 768px) {
     #map {
@@ -282,13 +382,27 @@
     }
     
     .ol-zoom {
-        top: 8px;
-        left: 8px;
+        top: 15px;
+        left: 15px;
     }
     
     .ol-search-geocoder input[type="text"] {
         padding: 8px 10px;
         font-size: 0.85em;
+    }
+    
+    /* Mobile-friendly zoom hint */
+    .zoom-hint-content {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.85rem;
+    }
+    
+    .zoom-hint-text {
+        display: none; /* Hide text on mobile, show icon only */
+    }
+    
+    .zoom-hint-icon {
+        font-size: 1.5rem;
     }
 }
 
