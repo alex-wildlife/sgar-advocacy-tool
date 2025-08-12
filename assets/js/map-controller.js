@@ -54,17 +54,16 @@ export class MapController {
                 minZoom: 5,
                 maxZoom: 12
             }),
-            controls: ol.control.defaults({
-                attribution: {
+            controls: [
+                new ol.control.Attribution({
                     collapsible: false
-                }
-            })
+                }),
+                new ol.control.Rotate(),
+                new ol.control.Zoom()
+            ]
         });
 
-        // Add zoom control
-        this.map.addControl(new ol.control.Zoom({
-            className: 'ol-zoom ol-unselectable ol-control'
-        }));
+        // Zoom control is already included in the default controls above
 
         // Add fullscreen control
         this.map.addControl(new ol.control.FullScreen());
@@ -134,7 +133,7 @@ export class MapController {
                        `outputFormat=application/json&srsname=EPSG:3857&` +
                        `bbox=${extent.join(',')},EPSG:3857`;
             },
-            strategy: ol.loadingstrategy.all
+            strategy: ol.loadingstrategy.bbox
         });
 
         // Create layer for LGA boundaries
