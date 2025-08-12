@@ -142,12 +142,15 @@
 
 .councils-container {
     min-height: 400px;
+    margin: 0; /* Remove any default margins */
+    width: 100%; /* Ensure full width */
 }
 
 .council-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--space-lg);
+    gap: 1.5rem; /* Desktop spacing */
+    padding: var(--space-md);
 }
 
 .council-list {
@@ -212,7 +215,8 @@
     
     .council-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-lg);
+        gap: 1rem; /* Mobile spacing */
+        padding: var(--space-sm);
     }
     
     .stats-dashboard,
@@ -267,9 +271,20 @@
 }
 
 /* Large screens optimization */
+/* Tablet spacing */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .council-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem; /* Tablet spacing */
+        padding: var(--space-md);
+    }
+}
+
 @media (min-width: 1200px) {
     .council-grid {
         grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem; /* Desktop spacing */
+        padding: var(--space-md);
     }
     
     .stats-grid {

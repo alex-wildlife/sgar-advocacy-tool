@@ -152,9 +152,11 @@
     flex-direction: column;
     align-items: center;
     gap: var(--space-md);
-    padding: var(--space-lg) 0;
+    padding: var(--space-lg) var(--space-md);
     border-top: 1px solid var(--neutral-200);
     margin-top: var(--space-lg);
+    background: var(--neutral-50);
+    border-radius: 12px;
 }
 
 .pagination-info {
@@ -407,14 +409,17 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: var(--shadow-md);
+    border: 1px solid var(--neutral-200);
     transition: all var(--transition-base);
     position: relative;
     cursor: pointer;
+    margin: 0; /* Ensure no additional margins interfere with grid gap */
 }
 
 .council-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
+    border-color: var(--primary);
 }
 
 .council-card-header {
