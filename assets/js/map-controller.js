@@ -117,6 +117,8 @@ export class MapController {
     }
 
     loadCouncilBoundaries() {
+        console.log('🗺️ Starting loadCouncilBoundaries...');
+        
         // Create vector source for council boundaries
         this.vectorSource = new ol.source.Vector();
 
@@ -127,50 +129,80 @@ export class MapController {
         });
 
         this.map.addLayer(this.vectorLayer);
+        console.log('✅ Added vectorLayer to map');
 
-        // Load NSW LGA boundaries from official Australian Government data source
-        // Using data.gov.au GeoJSON endpoint (more reliable than WFS)
-        const wfsSource = new ol.source.Vector({
+        // Load NSW LGA boundaries from OpenDataSoft (reliable alternative)
+        // Using official Australian LGA data filtered for NSW only
+        const geoJsonUrl = 'https://data.opendatasoft.com/api/records/1.0/search/?dataset=georef-australia-local-government-area@public&q=NSW&format=geojson&rows=200';
+        console.log('🌐 Loading GeoJSON from OpenDataSoft:', geoJsonUrl);
+        
+        const lgaSource = new ol.source.Vector({
             format: new ol.format.GeoJSON(),
-            url: 'https://data.gov.au/geoserver/nsw-local-government-areas/wfs?request=GetFeature&typeName=ckan_f6a00643_1842_48cd_9c2f_df23a3a1dc1e&outputFormat=json'
+            url: geoJsonUrl
         });
 
         // Create layer for LGA boundaries
         const lgaLayer = new ol.layer.Vector({
-            source: wfsSource,
+            source: lgaSource,
             style: (feature) => this.getLGAStyle(feature)
         });
 
+        console.log('📍 Adding LGA layer to map...');
         this.map.addLayer(lgaLayer);
+        console.log('✅ LGA layer added to map');
 
         // Store reference for filtering
         this.lgaLayer = lgaLayer;
 
+        // Debug: Monitor loading states
+        lgaSource.on('featuresloadstart', () => {
+            console.log('🔄 Features loading started...');
+        });
+
         // Listen for features loaded
-        wfsSource.on('featuresloadend', () => {
+        lgaSource.on('featuresloadend', () => {
+            console.log('✅ Features loading completed!');
             this.onBoundariesLoaded();
         });
         
-        // Debug: Add error handling for WFS loading
-        wfsSource.on('featuresloaderror', (event) => {
-            console.error('Error loading WFS features:', event);
+        // Debug: Add error handling for loading
+        lgaSource.on('featuresloaderror', (event) => {
+            console.error('❌ Error loading GeoJSON features:', event);
         });
+        
+        // Debug: Check layer visibility and properties
+        setTimeout(() => {
+            console.log('🔍 Layer debug info after 3 seconds:');
+            console.log('- LGA Layer visible:', lgaLayer.getVisible());
+            console.log('- LGA Layer opacity:', lgaLayer.getOpacity());
+            console.log('- Map layers count:', this.map.getLayers().getLength());
+            console.log('- Source state:', lgaSource.getState());
+            console.log('- Features in source:', lgaSource.getFeatures().length);
+        }, 3000);
     }
 
     getLGAStyle(feature) {
-        // Try multiple possible property names for LGA name
-        const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name') || 
-                           feature.get('NAME') || feature.get('lga_nam11') || feature.get('lga_name16') ||
-                           feature.get('LGA_NAME22') || feature.get('lgaName') || feature.get('LGA_NAM');
+        // Debug: Track total style calls
+        if (!this.styleCallCount) this.styleCallCount = 0;
+        this.styleCallCount++;
+        
+        // Try multiple possible property names for LGA name (OpenDataSoft format)
+        const councilName = feature.get('lga_name_2021') || feature.get('lga_name') || feature.get('LGA_NAME') || 
+                           feature.get('name') || feature.get('NAME') || feature.get('lga_nam11') || 
+                           feature.get('lga_name16') || feature.get('LGA_NAME22') || feature.get('lgaName') || 
+                           feature.get('LGA_NAM');
         const council = this.findCouncilByName(councilName);
         
-        // Debug: Log styling decisions for first few features
-        if (Math.random() < 0.05) { // Only log ~5% of features to avoid spam
-            console.log(`Styling feature with GIS name: "${councilName}", Found council:`, council ? `${council.name} (${council.status})` : 'NOT FOUND');
+        // Debug: Log first few styling calls with details
+        if (this.styleCallCount <= 5) {
+            console.log(`🎨 Style call ${this.styleCallCount}: GIS name="${councilName}", Found council:`, council ? `${council.name} (${council.status})` : 'NOT FOUND');
+            const props = feature.getProperties();
+            console.log('Feature properties:', Object.keys(props).filter(k => k !== 'geometry'));
         }
         
         if (!council) {
-            return new ol.style.Style({
+            // Default style for unmapped councils
+            const defaultStyle = new ol.style.Style({
                 stroke: new ol.style.Stroke({
                     color: '#cccccc',
                     width: 1
@@ -179,11 +211,16 @@ export class MapController {
                     color: 'rgba(200, 200, 200, 0.1)'
                 })
             });
+            
+            if (this.styleCallCount <= 5) {
+                console.log('🔘 Returning default style for unmapped council');
+            }
+            return defaultStyle;
         }
 
         const colors = this.getStatusColors(council.status);
         
-        return new ol.style.Style({
+        const style = new ol.style.Style({
             stroke: new ol.style.Stroke({
                 color: colors.border,
                 width: 2
@@ -192,6 +229,12 @@ export class MapController {
                 color: colors.fill
             })
         });
+        
+        if (this.styleCallCount <= 5) {
+            console.log(`🟢 Returning colored style: ${colors.fill} (${council.status})`);
+        }
+        
+        return style;
     }
 
     getCouncilStyle(feature) {
@@ -302,9 +345,10 @@ export class MapController {
         
         if (features && features.length > 0) {
             const feature = features[0];
-            const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name') || 
-                               feature.get('NAME') || feature.get('lga_nam11') || feature.get('lga_name16') ||
-                               feature.get('LGA_NAME22') || feature.get('lgaName') || feature.get('LGA_NAM');
+            const councilName = feature.get('lga_name_2021') || feature.get('lga_name') || feature.get('LGA_NAME') || 
+                               feature.get('name') || feature.get('NAME') || feature.get('lga_nam11') || 
+                               feature.get('lga_name16') || feature.get('LGA_NAME22') || feature.get('lgaName') || 
+                               feature.get('LGA_NAM');
             const council = this.findCouncilByName(councilName);
             
             if (council) {
@@ -393,25 +437,56 @@ export class MapController {
     }
 
     onBoundariesLoaded() {
-        console.log('NSW LGA boundaries loaded successfully');
+        console.log('🎉 NSW LGA boundaries loaded successfully');
         
         // Debug: Check what features were loaded
         if (this.lgaLayer) {
             const features = this.lgaLayer.getSource().getFeatures();
-            console.log(`Loaded ${features.length} LGA features`);
+            console.log(`📊 Loaded ${features.length} LGA features`);
+            
+            if (features.length === 0) {
+                console.error('❌ No features found in loaded data!');
+                return;
+            }
             
             // Sample some feature names for debugging
             features.slice(0, 5).forEach((feature, index) => {
                 const properties = feature.getProperties();
                 const propertyNames = Object.keys(properties).filter(key => key !== 'geometry');
-                console.log(`Feature ${index} properties:`, propertyNames);
+                console.log(`📝 Feature ${index} properties:`, propertyNames);
                 
-                const name = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name') || 
-                           feature.get('NAME') || feature.get('lga_nam11') || feature.get('lga_name16') ||
-                           feature.get('LGA_NAME22') || feature.get('lgaName') || feature.get('LGA_NAM');
+                // Show all property values for first feature
+                if (index === 0) {
+                    console.log('📝 First feature all properties:', properties);
+                }
+                
+                const name = feature.get('lga_name_2021') || feature.get('lga_name') || feature.get('LGA_NAME') || 
+                           feature.get('name') || feature.get('NAME') || feature.get('lga_nam11') || 
+                           feature.get('lga_name16') || feature.get('LGA_NAME22') || feature.get('lgaName') || 
+                           feature.get('LGA_NAM');
                 const council = this.findCouncilByName(name);
-                console.log(`Feature ${index}: GIS name="${name}", Found council:`, council ? council.name : 'NOT FOUND');
+                console.log(`🏛️ Feature ${index}: GIS name="${name}", Found council:`, council ? `${council.name} (${council.status})` : 'NOT FOUND');
+                
+                // Check geometry
+                const geometry = feature.getGeometry();
+                if (geometry) {
+                    console.log(`🗺️ Feature ${index} geometry type:`, geometry.getType());
+                    const extent = geometry.getExtent();
+                    console.log(`📐 Feature ${index} extent:`, extent);
+                } else {
+                    console.error(`❌ Feature ${index} has no geometry!`);
+                }
             });
+            
+            // Force a style refresh
+            console.log('🎨 Forcing layer style refresh...');
+            this.lgaLayer.getSource().changed();
+            
+            // Check if layer is visible and has proper z-index
+            console.log('👀 Layer visibility checks:');
+            console.log('- Layer visible:', this.lgaLayer.getVisible());
+            console.log('- Layer opacity:', this.lgaLayer.getOpacity());
+            console.log('- Layer z-index:', this.lgaLayer.getZIndex());
         }
         
         this.updateMapData();
@@ -429,9 +504,10 @@ export class MapController {
         
         if (this.lgaLayer) {
             this.lgaLayer.setStyle((feature) => {
-                const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name') || 
-                                  feature.get('NAME') || feature.get('lga_nam11') || feature.get('lga_name16') ||
-                                  feature.get('LGA_NAME22') || feature.get('lgaName') || feature.get('LGA_NAM');
+                const councilName = feature.get('lga_name_2021') || feature.get('lga_name') || feature.get('LGA_NAME') || 
+                                  feature.get('name') || feature.get('NAME') || feature.get('lga_nam11') || 
+                                  feature.get('lga_name16') || feature.get('LGA_NAME22') || feature.get('lgaName') || 
+                                  feature.get('LGA_NAM');
                 const council = this.findCouncilByName(councilName);
                 
                 if (!council) {
@@ -456,9 +532,10 @@ export class MapController {
 
         const features = this.lgaLayer.getSource().getFeatures();
         const feature = features.find(f => {
-            const name = f.get('lga_name') || f.get('LGA_NAME') || f.get('name') || 
-                        f.get('NAME') || f.get('lga_nam11') || f.get('lga_name16') ||
-                        f.get('LGA_NAME22') || f.get('lgaName') || f.get('LGA_NAM');
+            const name = f.get('lga_name_2021') || f.get('lga_name') || f.get('LGA_NAME') || 
+                        f.get('name') || f.get('NAME') || f.get('lga_nam11') || 
+                        f.get('lga_name16') || f.get('LGA_NAME22') || f.get('lgaName') || 
+                        f.get('LGA_NAM');
             return name && name.toUpperCase().includes(councilName.toUpperCase());
         });
 
