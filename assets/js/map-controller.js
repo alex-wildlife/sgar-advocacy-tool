@@ -128,17 +128,11 @@ export class MapController {
 
         this.map.addLayer(this.vectorLayer);
 
-        // Load NSW LGA boundaries from public data source
-        // Using NSW Spatial Services WFS endpoint
+        // Load NSW LGA boundaries from official Australian Government data source
+        // Using data.gov.au GeoJSON endpoint (more reliable than WFS)
         const wfsSource = new ol.source.Vector({
             format: new ol.format.GeoJSON(),
-            url: (extent) => {
-                return `https://maps.six.nsw.gov.au/arcgis/services/public/NSW_Administrative_Boundaries/MapServer/WFSServer?` +
-                       `service=WFS&version=1.1.0&request=GetFeature&typename=NSW_Administrative_Boundaries:LGA&` +
-                       `outputFormat=application/json&srsname=EPSG:3857&` +
-                       `bbox=${extent.join(',')},EPSG:3857`;
-            },
-            strategy: ol.loadingstrategy.bbox
+            url: 'https://data.gov.au/geoserver/nsw-local-government-areas/wfs?request=GetFeature&typeName=ckan_f6a00643_1842_48cd_9c2f_df23a3a1dc1e&outputFormat=json'
         });
 
         // Create layer for LGA boundaries
@@ -164,7 +158,10 @@ export class MapController {
     }
 
     getLGAStyle(feature) {
-        const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name');
+        // Try multiple possible property names for LGA name
+        const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name') || 
+                           feature.get('NAME') || feature.get('lga_nam11') || feature.get('lga_name16') ||
+                           feature.get('LGA_NAME22') || feature.get('lgaName') || feature.get('LGA_NAM');
         const council = this.findCouncilByName(councilName);
         
         // Debug: Log styling decisions for first few features
@@ -305,7 +302,9 @@ export class MapController {
         
         if (features && features.length > 0) {
             const feature = features[0];
-            const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name');
+            const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name') || 
+                               feature.get('NAME') || feature.get('lga_nam11') || feature.get('lga_name16') ||
+                               feature.get('LGA_NAME22') || feature.get('lgaName') || feature.get('LGA_NAM');
             const council = this.findCouncilByName(councilName);
             
             if (council) {
@@ -403,7 +402,13 @@ export class MapController {
             
             // Sample some feature names for debugging
             features.slice(0, 5).forEach((feature, index) => {
-                const name = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name');
+                const properties = feature.getProperties();
+                const propertyNames = Object.keys(properties).filter(key => key !== 'geometry');
+                console.log(`Feature ${index} properties:`, propertyNames);
+                
+                const name = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name') || 
+                           feature.get('NAME') || feature.get('lga_nam11') || feature.get('lga_name16') ||
+                           feature.get('LGA_NAME22') || feature.get('lgaName') || feature.get('LGA_NAM');
                 const council = this.findCouncilByName(name);
                 console.log(`Feature ${index}: GIS name="${name}", Found council:`, council ? council.name : 'NOT FOUND');
             });
@@ -424,7 +429,9 @@ export class MapController {
         
         if (this.lgaLayer) {
             this.lgaLayer.setStyle((feature) => {
-                const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name');
+                const councilName = feature.get('lga_name') || feature.get('LGA_NAME') || feature.get('name') || 
+                                  feature.get('NAME') || feature.get('lga_nam11') || feature.get('lga_name16') ||
+                                  feature.get('LGA_NAME22') || feature.get('lgaName') || feature.get('LGA_NAM');
                 const council = this.findCouncilByName(councilName);
                 
                 if (!council) {
@@ -449,7 +456,9 @@ export class MapController {
 
         const features = this.lgaLayer.getSource().getFeatures();
         const feature = features.find(f => {
-            const name = f.get('lga_name') || f.get('LGA_NAME') || f.get('name');
+            const name = f.get('lga_name') || f.get('LGA_NAME') || f.get('name') || 
+                        f.get('NAME') || f.get('lga_nam11') || f.get('lga_name16') ||
+                        f.get('LGA_NAME22') || f.get('lgaName') || f.get('LGA_NAM');
             return name && name.toUpperCase().includes(councilName.toUpperCase());
         });
 
