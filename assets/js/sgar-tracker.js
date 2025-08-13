@@ -1043,6 +1043,9 @@ export class SGARTracker {
     }
 
     setupProfessionalFilters() {
+        // Populate region dropdown with actual regions from data
+        this.populateRegionDropdown();
+        
         // Status filter dropdown
         const statusFilter = document.getElementById('status-filter');
         if (statusFilter) {
@@ -1080,14 +1083,8 @@ export class SGARTracker {
                 if (value === 'all') {
                     this.filters.region = [];
                 } else {
-                    // Map dropdown values to internal region values
-                    const regionMap = {
-                        'sydney-metropolitan': ['Sydney Metropolitan'],
-                        'regional-nsw': ['Regional NSW'],
-                        'hunter-region': ['Hunter Region'],
-                        'illawarra-region': ['Illawarra Region']
-                    };
-                    this.filters.region = regionMap[value] || [value];
+                    // Use the selected region directly (no mapping needed now)
+                    this.filters.region = [value];
                 }
                 this.renderCouncils();
                 
@@ -1106,5 +1103,34 @@ export class SGARTracker {
     updateFilteredResultsCounter() {
         const filteredCouncils = this.getFilteredCouncils();
         this.updateResultsCounter(filteredCouncils.length, this.councils.length);
+    }
+
+    populateRegionDropdown() {
+        const regionFilter = document.getElementById('region-filter');
+        if (!regionFilter) return;
+
+        // Get all unique regions from councils data and count councils per region
+        const regionCounts = {};
+        this.councils.forEach(council => {
+            const region = council.region;
+            regionCounts[region] = (regionCounts[region] || 0) + 1;
+        });
+
+        // Sort regions alphabetically
+        const sortedRegions = Object.keys(regionCounts).sort();
+
+        // Clear existing options except "All Regions"
+        regionFilter.innerHTML = '<option value="all">All Regions</option>';
+
+        // Add regions with council counts
+        sortedRegions.forEach(region => {
+            const count = regionCounts[region];
+            const option = document.createElement('option');
+            option.value = region;
+            option.textContent = `${region} (${count})`;
+            regionFilter.appendChild(option);
+        });
+
+        console.log('🏘️ Region dropdown populated with:', sortedRegions.map(r => `${r} (${regionCounts[r]})`));
     }
 }
