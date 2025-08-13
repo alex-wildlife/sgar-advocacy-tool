@@ -671,9 +671,11 @@ export class MapController {
     }
 
     applyFilter(filter) {
+        console.log('🎯 MapController.applyFilter called with:', filter);
         this.currentFilter = filter;
         
         if (this.lgaLayer) {
+            console.log('🗺️ Applying filters to map layer...');
             this.lgaLayer.setStyle((feature) => {
                 const councilName = feature.get('lga_name_2021') || feature.get('lga_name') || feature.get('LGA_NAME') || 
                                   feature.get('name') || feature.get('NAME') || feature.get('lga_nam11') || 
@@ -686,11 +688,36 @@ export class MapController {
                 }
 
                 // Apply filter logic
+                let shouldShow = true;
+                
+                // Status filter
                 if (filter && filter.status && filter.status.length > 0) {
                     if (!filter.status.includes(council.status)) {
-                        // Hide councils that don't match filter
-                        return new ol.style.Style({});
+                        shouldShow = false;
                     }
+                }
+                
+                // Region filter
+                if (filter && filter.region && filter.region.length > 0) {
+                    if (!filter.region.includes(council.region)) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Search filter
+                if (filter && filter.search && filter.search.length > 0) {
+                    const searchTerm = filter.search.toLowerCase();
+                    const councilMatchesSearch = council.name.toLowerCase().includes(searchTerm) ||
+                                               (council.region && council.region.toLowerCase().includes(searchTerm)) ||
+                                               council.status.toLowerCase().includes(searchTerm);
+                    if (!councilMatchesSearch) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Hide councils that don't match any active filters
+                if (!shouldShow) {
+                    return new ol.style.Style({});
                 }
 
                 return this.getLGAStyle(feature);

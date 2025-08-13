@@ -346,6 +346,11 @@ export class SGARTracker {
                 setTimeout(() => {
                     this.mapController.resize();
                     console.log('✅ Map resize 3 complete');
+                    
+                    // Apply current filters to map
+                    console.log('🔍 Applying current filters to map:', this.filters);
+                    this.mapController.applyFilter(this.filters);
+                    
                     // Final check
                     const finalMapCheck = document.getElementById('map');
                     if (finalMapCheck) {
@@ -673,6 +678,14 @@ export class SGARTracker {
     // Set controller references for integration
     setMapController(mapController) {
         this.mapController = mapController;
+        
+        // Apply current filters to map when controller is connected
+        if (this.hasActiveFilters()) {
+            console.log('🔗 Map controller connected, applying existing filters:', this.filters);
+            setTimeout(() => {
+                this.mapController.applyFilter(this.filters);
+            }, 500); // Small delay to ensure map is ready
+        }
     }
 
     setUIController(uiController) {
@@ -1047,6 +1060,13 @@ export class SGARTracker {
                     this.filters.status = statusMap[value] || [];
                 }
                 this.renderCouncils();
+                
+                // Update map if controller is available
+                if (this.mapController) {
+                    console.log('🗺️ Updating map with status filter:', this.filters.status);
+                    this.mapController.applyFilter(this.filters);
+                }
+                
                 this.updateClearFiltersVisibility();
                 this.updateFilteredResultsCounter();
             });
@@ -1070,6 +1090,13 @@ export class SGARTracker {
                     this.filters.region = regionMap[value] || [value];
                 }
                 this.renderCouncils();
+                
+                // Update map if controller is available
+                if (this.mapController) {
+                    console.log('🗺️ Updating map with region filter:', this.filters.region);
+                    this.mapController.applyFilter(this.filters);
+                }
+                
                 this.updateClearFiltersVisibility();
                 this.updateFilteredResultsCounter();
             });
