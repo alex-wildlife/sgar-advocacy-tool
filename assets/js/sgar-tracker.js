@@ -822,11 +822,6 @@ export class SGARTracker {
                 </div>
                 
                 <div class="detail-section">
-                    <div class="detail-label">Pest Control Programs</div>
-                    <div class="detail-content">${council.programs || 'No specific program information available'}</div>
-                </div>
-                
-                <div class="detail-section">
                     <div class="detail-label">Contact Information</div>
                     <a href="mailto:${council.contactEmail}" class="detail-content email">
                         ${council.contactEmail}
