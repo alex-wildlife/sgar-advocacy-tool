@@ -414,6 +414,11 @@ export class SGARTracker {
                     <div class="council-notes">${council.notes}</div>
                     <div class="council-action">
                         ${this.createActionButton(council)}
+                        <button class="council-action-btn secondary view-details-btn" 
+                                onclick="app.openCouncilDetails('${encodeURIComponent(JSON.stringify(council))}')"
+                                aria-label="View detailed information for ${council.name}">
+                            📋 View Details
+                        </button>
                     </div>
                 </div>
             </article>
@@ -753,5 +758,143 @@ export class SGARTracker {
                this.filters.status.length > 0 ||
                this.filters.region.length > 0 ||
                (this.filters.quickFilter && this.filters.quickFilter !== 'all');
+    }
+
+    contactCouncil(encodedCouncilData) {
+        console.log('Contact council called with:', encodedCouncilData);
+    }
+
+    openCouncilDetails(encodedCouncilData) {
+        try {
+            const council = JSON.parse(decodeURIComponent(encodedCouncilData));
+            this.showCouncilDetailsModal(council);
+        } catch (error) {
+            console.error('Error parsing council data:', error);
+        }
+    }
+
+    showCouncilDetailsModal(council) {
+        const modal = document.getElementById('councilDetailsModal');
+        const container = document.getElementById('councilDetailsContainer');
+        
+        if (!modal || !container) return;
+
+        // Generate modal content
+        container.innerHTML = this.createCouncilDetailsContent(council);
+
+        // Show modal
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+
+        // Set up event listeners
+        this.setupModalEventListeners(modal);
+    }
+
+    createCouncilDetailsContent(council) {
+        const statusInfo = formatCouncilStatus(council.status);
+        const statusIcon = statusInfo.icon;
+        const statusText = statusInfo.text;
+        
+        // Format last updated date if available
+        const lastUpdated = council.lastUpdated ? 
+            new Date(council.lastUpdated).toLocaleDateString('en-AU', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }) : 'Not specified';
+
+        return `
+            <div class="council-details-header">
+                <h2 class="council-details-title">${council.name}</h2>
+                <div class="council-details-status">
+                    ${statusIcon} ${statusText}
+                </div>
+            </div>
+            <div class="council-details-body">
+                <div class="detail-section">
+                    <div class="detail-label">SGAR Status</div>
+                    <div class="detail-content">${statusText} - ${this.getStatusDescription(council.status)}</div>
+                </div>
+                
+                <div class="detail-section">
+                    <div class="detail-label">Region</div>
+                    <div class="detail-content">${council.region || 'Not specified'}</div>
+                </div>
+                
+                <div class="detail-section">
+                    <div class="detail-label">Pest Control Programs</div>
+                    <div class="detail-content">${council.programs || 'No specific program information available'}</div>
+                </div>
+                
+                <div class="detail-section">
+                    <div class="detail-label">Contact Information</div>
+                    <a href="mailto:${council.contactEmail}" class="detail-content email">
+                        ${council.contactEmail}
+                    </a>
+                </div>
+                
+                <div class="detail-section">
+                    <div class="detail-label">Last Updated</div>
+                    <div class="detail-content">${lastUpdated}</div>
+                </div>
+                
+                <div class="detail-section">
+                    <div class="detail-label">Detailed Notes</div>
+                    <div class="detail-content">${council.notes}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    getStatusDescription(status) {
+        switch (status) {
+            case 'Yes':
+                return 'Council currently uses Second Generation Anticoagulant Rodenticides in pest control programs';
+            case 'No':
+                return 'Council has adopted SGAR-free pest control methods, protecting local wildlife';
+            case 'Unknown':
+            default:
+                return 'Council policy regarding SGAR usage is not publicly available or unclear';
+        }
+    }
+
+    setupModalEventListeners(modal) {
+        // Close button
+        const closeBtn = modal.querySelector('.details-close-btn');
+        if (closeBtn) {
+            closeBtn.onclick = () => this.closeCouncilDetailsModal();
+        }
+
+        // Click outside modal
+        const overlay = modal.querySelector('.modal-overlay');
+        if (overlay) {
+            overlay.onclick = () => this.closeCouncilDetailsModal();
+        }
+
+        // ESC key
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') {
+                this.closeCouncilDetailsModal();
+                document.removeEventListener('keydown', handleEscape);
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
+
+        // Store event handler for cleanup
+        modal._escapeHandler = handleEscape;
+    }
+
+    closeCouncilDetailsModal() {
+        const modal = document.getElementById('councilDetailsModal');
+        if (!modal) return;
+
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Restore background scroll
+
+        // Clean up event listener
+        if (modal._escapeHandler) {
+            document.removeEventListener('keydown', modal._escapeHandler);
+            delete modal._escapeHandler;
+        }
     }
 }
