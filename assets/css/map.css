@@ -15,6 +15,23 @@
     overflow: hidden;
 }
 
+/* Force Map Visibility Override */
+.map-section.show-map,
+.map-container.show-map,
+#map.show-map {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Force Hide Map */
+.map-section.hide-map,
+.map-container.hide-map,
+#map.hide-map {
+    display: none !important;
+    visibility: hidden !important;
+}
+
 /* Map Controls */
 .map-controls {
     position: absolute;

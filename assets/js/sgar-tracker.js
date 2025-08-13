@@ -256,6 +256,7 @@ export class SGARTracker {
     }
 
     switchView(view) {
+        console.log(`🔄 Switching to ${view} view`);
         this.currentView = view;
         
         // Update buttons
@@ -263,63 +264,139 @@ export class SGARTracker {
             btn.classList.toggle('active', btn.getAttribute('data-view') === view);
         });
         
-        // Show/hide appropriate content based on view
+        // Get all necessary elements
         const councilsContainer = document.getElementById('councils-container');
         const mapSection = document.getElementById('map-section');
+        const mapContainer = document.getElementById('map');
+        const mapContainerParent = document.querySelector('.map-container');
         const paginationSection = document.getElementById('pagination-section');
         
+        console.log(`📍 Elements found - councilsContainer: ${!!councilsContainer}, mapSection: ${!!mapSection}, mapContainer: ${!!mapContainer}`);
+        
         if (view === 'map') {
-            // Show map, hide councils container and pagination
+            console.log('🗺️ Switching to MAP VIEW');
+            
+            // Hide councils completely
             if (councilsContainer) {
-                councilsContainer.style.display = 'none !important';
+                councilsContainer.style.display = 'none';
                 councilsContainer.style.visibility = 'hidden';
+                councilsContainer.style.setProperty('display', 'none', 'important');
                 // Remove all grid/list classes to prevent CSS conflicts
                 councilsContainer.classList.remove('council-grid', 'council-list');
                 councilsContainer.className = 'councils-container';
+                console.log('✅ Councils container hidden');
             }
+            
             if (paginationSection) {
-                paginationSection.style.display = 'none !important';
+                paginationSection.style.display = 'none';
+                paginationSection.style.setProperty('display', 'none', 'important');
+                console.log('✅ Pagination hidden');
             }
+            
+            // Show map section with explicit overrides and CSS classes
             if (mapSection) {
-                mapSection.style.display = 'block !important';
+                mapSection.classList.remove('hide-map');
+                mapSection.classList.add('show-map');
+                mapSection.style.display = 'block';
                 mapSection.style.visibility = 'visible';
+                mapSection.style.setProperty('display', 'block', 'important');
+                console.log('✅ Map section shown');
+            }
+            
+            // Ensure map container itself is visible
+            if (mapContainer) {
+                mapContainer.classList.remove('hide-map');
+                mapContainer.classList.add('show-map');
+                mapContainer.style.display = 'block';
+                mapContainer.style.visibility = 'visible';
+                mapContainer.style.setProperty('display', 'block', 'important');
+                console.log('✅ Map container shown');
+            }
+            
+            // Ensure map container parent is visible
+            if (mapContainerParent) {
+                mapContainerParent.classList.remove('hide-map');
+                mapContainerParent.classList.add('show-map');
+                mapContainerParent.style.display = 'block';
+                mapContainerParent.style.visibility = 'visible';
+                mapContainerParent.style.setProperty('display', 'block', 'important');
+                console.log('✅ Map container parent shown');
             }
             
             // Force map container dimensions update and trigger resize
             if (this.mapController && this.mapController.map) {
+                console.log('🔄 Triggering map resize...');
                 // Multiple resize attempts to ensure proper map display
                 setTimeout(() => {
                     this.mapController.resize();
+                    console.log('✅ Map resize 1 complete');
                 }, 50);
                 setTimeout(() => {
                     this.mapController.resize();
+                    console.log('✅ Map resize 2 complete');
                 }, 150);
                 setTimeout(() => {
                     this.mapController.resize();
+                    console.log('✅ Map resize 3 complete');
+                    // Final check
+                    const finalMapCheck = document.getElementById('map');
+                    if (finalMapCheck) {
+                        console.log(`🔍 Final map visibility check: display=${getComputedStyle(finalMapCheck).display}, visibility=${getComputedStyle(finalMapCheck).visibility}`);
+                    }
                 }, 300);
             }
+            
         } else {
-            // Show councils container, hide map
+            console.log(`📋 Switching to ${view.toUpperCase()} VIEW`);
+            
+            // Hide map completely
             if (mapSection) {
-                mapSection.style.display = 'none !important';
+                mapSection.classList.remove('show-map');
+                mapSection.classList.add('hide-map');
+                mapSection.style.display = 'none';
                 mapSection.style.visibility = 'hidden';
+                mapSection.style.setProperty('display', 'none', 'important');
+                console.log('✅ Map section hidden');
             }
+            
+            if (mapContainer) {
+                mapContainer.classList.remove('show-map');
+                mapContainer.classList.add('hide-map');
+                mapContainer.style.display = 'none';
+                mapContainer.style.visibility = 'hidden';
+                mapContainer.style.setProperty('display', 'none', 'important');
+                console.log('✅ Map container hidden');
+            }
+            
+            if (mapContainerParent) {
+                mapContainerParent.classList.remove('show-map');
+                mapContainerParent.classList.add('hide-map');
+                console.log('✅ Map container parent hidden');
+            }
+            
+            // Show councils container
             if (councilsContainer) {
-                councilsContainer.style.display = 'block !important';
-                councilsContainer.style.visibility = 'visible';
                 // Clear any previous inline styles that might interfere
                 councilsContainer.style.removeProperty('display');
-                councilsContainer.style.visibility = '';
+                councilsContainer.style.removeProperty('visibility');
+                councilsContainer.style.display = 'block';
+                councilsContainer.style.visibility = 'visible';
+                councilsContainer.style.setProperty('display', 'block', 'important');
+                console.log('✅ Councils container shown');
             }
             
             // Show pagination for grid view only
             if (paginationSection) {
                 paginationSection.style.display = view === 'grid' ? 'block' : 'none';
+                console.log(`✅ Pagination ${view === 'grid' ? 'shown' : 'hidden'}`);
             }
             
             // Render councils for grid/list view
             this.renderCouncils();
+            console.log('✅ Councils rendered');
         }
+        
+        console.log(`✅ View switch to ${view} complete`);
     }
 
     renderCouncils() {
