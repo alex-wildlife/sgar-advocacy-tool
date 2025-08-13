@@ -170,6 +170,9 @@
     padding: var(--space-lg);
     margin-bottom: var(--space-2xl);
     box-shadow: var(--shadow-lg);
+    /* Ensure proper display when toggled */
+    position: relative;
+    z-index: 1;
 }
 
 .map-container {

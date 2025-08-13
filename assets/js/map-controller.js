@@ -695,6 +695,8 @@ export class MapController {
     resize() {
         // Handle responsive map resizing
         if (this.map) {
+            // Force immediate update and then delayed update for safety
+            this.map.updateSize();
             setTimeout(() => {
                 this.map.updateSize();
             }, 100);

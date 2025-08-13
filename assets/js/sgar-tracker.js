@@ -266,20 +266,49 @@ export class SGARTracker {
         // Show/hide appropriate content based on view
         const councilsContainer = document.getElementById('councils-container');
         const mapSection = document.getElementById('map-section');
+        const paginationSection = document.getElementById('pagination-section');
         
         if (view === 'map') {
-            // Show map, hide councils container
-            if (councilsContainer) councilsContainer.style.display = 'none';
-            if (mapSection) mapSection.style.display = 'block';
+            // Show map, hide councils container and pagination
+            if (councilsContainer) {
+                councilsContainer.style.display = 'none';
+            }
+            if (paginationSection) {
+                paginationSection.style.display = 'none';
+            }
+            if (mapSection) {
+                mapSection.style.display = 'block';
+                mapSection.style.visibility = 'visible';
+            }
             
-            // Trigger map resize after showing (OpenLayers needs this)
-            if (this.mapController) {
-                setTimeout(() => this.mapController.resize(), 100);
+            // Force map container dimensions update and trigger resize
+            if (this.mapController && this.mapController.map) {
+                // Multiple resize attempts to ensure proper map display
+                setTimeout(() => {
+                    this.mapController.resize();
+                }, 50);
+                setTimeout(() => {
+                    this.mapController.resize();
+                }, 150);
+                setTimeout(() => {
+                    this.mapController.resize();
+                }, 300);
             }
         } else {
             // Show councils container, hide map
-            if (councilsContainer) councilsContainer.style.display = 'block';
-            if (mapSection) mapSection.style.display = 'none';
+            if (mapSection) {
+                mapSection.style.display = 'none';
+                mapSection.style.visibility = 'hidden';
+            }
+            if (councilsContainer) {
+                councilsContainer.style.display = 'block';
+                councilsContainer.style.visibility = 'visible';
+            }
+            
+            // Show pagination for grid view only
+            if (paginationSection) {
+                paginationSection.style.display = view === 'grid' ? 'block' : 'none';
+            }
             
             // Render councils for grid/list view
             this.renderCouncils();
