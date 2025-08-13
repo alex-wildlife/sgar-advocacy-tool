@@ -271,13 +271,17 @@ export class SGARTracker {
         if (view === 'map') {
             // Show map, hide councils container and pagination
             if (councilsContainer) {
-                councilsContainer.style.display = 'none';
+                councilsContainer.style.display = 'none !important';
+                councilsContainer.style.visibility = 'hidden';
+                // Remove all grid/list classes to prevent CSS conflicts
+                councilsContainer.classList.remove('council-grid', 'council-list');
+                councilsContainer.className = 'councils-container';
             }
             if (paginationSection) {
-                paginationSection.style.display = 'none';
+                paginationSection.style.display = 'none !important';
             }
             if (mapSection) {
-                mapSection.style.display = 'block';
+                mapSection.style.display = 'block !important';
                 mapSection.style.visibility = 'visible';
             }
             
@@ -297,12 +301,15 @@ export class SGARTracker {
         } else {
             // Show councils container, hide map
             if (mapSection) {
-                mapSection.style.display = 'none';
+                mapSection.style.display = 'none !important';
                 mapSection.style.visibility = 'hidden';
             }
             if (councilsContainer) {
-                councilsContainer.style.display = 'block';
+                councilsContainer.style.display = 'block !important';
                 councilsContainer.style.visibility = 'visible';
+                // Clear any previous inline styles that might interfere
+                councilsContainer.style.removeProperty('display');
+                councilsContainer.style.visibility = '';
             }
             
             // Show pagination for grid view only

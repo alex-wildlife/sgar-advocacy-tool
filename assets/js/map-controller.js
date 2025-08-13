@@ -298,10 +298,10 @@ export class MapController {
             }
         });
 
-        // Create layer for LGA boundaries
+        // Create layer for LGA boundaries with initial null style for performance
         const lgaLayer = new ol.layer.Vector({
             source: lgaSource,
-            style: (feature) => this.getLGAStyle(feature)
+            style: null // Start with no style for faster loading
         });
 
         console.log('📍 Adding LGA layer to map...');
@@ -311,20 +311,47 @@ export class MapController {
         // Store reference for filtering
         this.lgaLayer = lgaLayer;
 
+        // Add loading state to map
+        this.showMapLoading();
+
         // Debug: Monitor loading states
         lgaSource.on('featuresloadstart', () => {
             console.log('🔄 Features loading started...');
+            this.showMapLoading();
         });
 
-        // Listen for features loaded
+        // Optimize: Use 'change' event with state check for better performance
+        lgaSource.once('change', () => {
+            if (lgaSource.getState() === 'ready') {
+                console.log('✅ Features ready, applying styles...');
+                // Add delay before applying styles for better performance
+                setTimeout(() => {
+                    lgaLayer.setStyle((feature) => this.getLGAStyle(feature));
+                    this.hideMapLoading();
+                    this.onBoundariesLoaded();
+                }, 200);
+            }
+        });
+
+        // Keep the end event for backup
         lgaSource.on('featuresloadend', () => {
             console.log('✅ Features loading completed!');
-            this.onBoundariesLoaded();
+            // Only trigger if not already handled by 'change' event
+            if (lgaLayer.getStyle() === null) {
+                setTimeout(() => {
+                    lgaLayer.setStyle((feature) => this.getLGAStyle(feature));
+                    this.hideMapLoading();
+                    this.onBoundariesLoaded();
+                }, 200);
+            }
         });
         
         // Debug: Add error handling for loading
         lgaSource.on('featuresloaderror', (event) => {
             console.error('❌ Error loading GeoJSON features:', event);
+            this.hideMapLoading();
+            // Show error message to user
+            this.showMapError('Failed to load council boundaries. Please refresh the page.');
         });
         
         // Simplified debug check (reduced to prevent loops)
@@ -703,6 +730,115 @@ export class MapController {
         }
     }
 
+    showMapLoading() {
+        const mapContainer = document.getElementById('map');
+        if (!mapContainer) return;
+        
+        // Remove existing loading indicator
+        this.hideMapLoading();
+        
+        // Create loading overlay
+        const loadingOverlay = document.createElement('div');
+        loadingOverlay.id = 'map-loading-overlay';
+        loadingOverlay.innerHTML = `
+            <div class="map-loading-content">
+                <div class="map-loading-spinner"></div>
+                <p>Loading council boundaries...</p>
+            </div>
+        `;
+        loadingOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-radius: 16px;
+        `;
+        
+        // Style the content
+        const style = document.createElement('style');
+        style.textContent = `
+            .map-loading-content {
+                text-align: center;
+                padding: 2rem;
+            }
+            .map-loading-spinner {
+                width: 40px;
+                height: 40px;
+                border: 4px solid #e3e3e3;
+                border-top: 4px solid #75B1AC;
+                border-radius: 50%;
+                animation: map-loading-spin 1s linear infinite;
+                margin: 0 auto 1rem;
+            }
+            @keyframes map-loading-spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            .map-loading-content p {
+                color: #555;
+                font-weight: 500;
+                margin: 0;
+            }
+        `;
+        
+        if (!document.getElementById('map-loading-styles')) {
+            style.id = 'map-loading-styles';
+            document.head.appendChild(style);
+        }
+        
+        mapContainer.appendChild(loadingOverlay);
+    }
+    
+    hideMapLoading() {
+        const loadingOverlay = document.getElementById('map-loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.remove();
+        }
+    }
+    
+    showMapError(message) {
+        const mapContainer = document.getElementById('map');
+        if (!mapContainer) return;
+        
+        // Create error overlay
+        const errorOverlay = document.createElement('div');
+        errorOverlay.id = 'map-error-overlay';
+        errorOverlay.innerHTML = `
+            <div class="map-error-content">
+                <div class="map-error-icon">⚠️</div>
+                <p>${message}</p>
+            </div>
+        `;
+        errorOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-radius: 16px;
+        `;
+        
+        mapContainer.appendChild(errorOverlay);
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            if (errorOverlay && errorOverlay.parentNode) {
+                errorOverlay.remove();
+            }
+        }, 5000);
+    }
+
     destroy() {
         // Clear zoom hint timeout
         if (this.zoomHintTimeout) {
@@ -713,6 +849,9 @@ export class MapController {
         if (this.zoomHint && this.zoomHint.parentNode) {
             this.zoomHint.parentNode.removeChild(this.zoomHint);
         }
+        
+        // Remove loading overlay
+        this.hideMapLoading();
         
         if (this.map) {
             this.map.dispose();
