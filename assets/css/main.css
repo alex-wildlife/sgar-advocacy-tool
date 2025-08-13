@@ -64,6 +64,31 @@
     --space-xl: 2rem;
     --space-2xl: 3rem;
     --space-3xl: 4rem;
+    
+    /* Additional spacing for professional design */
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    
+    /* Enhanced gray palette */
+    --gray-50: #fafbfc;
+    --gray-200: #f1f5f9;
+    --gray-300: #e2e8f0;
+    --gray-400: #cbd5e1;
+    --gray-600: #64748b;
+    --gray-700: #475569;
+    
+    /* Brand colors for SGAR advocacy */
+    --al-sage: #9db2a0;
+    --al-forest: #2d5a27;
+    --al-coral: #d97456;
+    
+    /* Radius scale */
+    --radius-md: 0.5rem;
+    --radius-full: 9999px;
 }
 
 /* Dark mode support */

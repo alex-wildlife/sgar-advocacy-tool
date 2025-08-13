@@ -73,43 +73,58 @@
             </div>
         </section>
 
-        <section class="controls-section">
+        <section class="controls-section control-panel">
             <div class="controls-container">
                 <h2 class="control-title">Find Your Council</h2>
-                <div class="search-controls">
+                
+                <!-- Enhanced Search Container -->
+                <div class="search-container">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
                     <input 
                         type="text" 
                         id="council-search" 
                         name="council-search"
                         class="search-input" 
-                        placeholder="Search councils by name..."
+                        placeholder="Search councils by name, region, or status..."
                         autocomplete="off"
                     >
-                    <div class="filter-controls">
-                        <div class="filter-header">
-                            <h4 class="dropdown-title">Quick Filters</h4>
-                            <button class="clear-filters-btn" id="clear-filters-btn" style="display: none;">
-                                <span>✕</span>
-                                <span>Clear Filters</span>
-                            </button>
-                        </div>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-filter="all">
-                                <span class="filter-name">All Councils</span>
-                            </button>
-                            <button class="filter-btn" data-filter="using-sgars">
-                                <span class="filter-name">Councils Using SGARs</span>
-                                <span class="filter-count" id="filter-count-danger"></span>
-                            </button>
-                            <button class="filter-btn" data-filter="sgar-free">
-                                <span class="filter-name">SGAR-Free Councils</span>
-                                <span class="filter-count" id="filter-count-success"></span>
-                            </button>
-                            <button class="filter-btn" data-filter="unknown">
-                                <span class="filter-name">Status Unknown</span>
-                            </button>
-                        </div>
+                </div>
+                
+                <!-- Professional Filter Grid -->
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label class="filter-label">SGAR Status</label>
+                        <select class="filter-select" id="status-filter" data-filter-type="status">
+                            <option value="all">All Status Types</option>
+                            <option value="using-sgars">Using SGARs</option>
+                            <option value="sgar-free">SGAR-Free</option>
+                            <option value="unknown">Status Unknown</option>
+                        </select>
                     </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">Region</label>
+                        <select class="filter-select" id="region-filter" data-filter-type="region">
+                            <option value="all">All Regions</option>
+                            <option value="sydney-metropolitan">Sydney Metropolitan</option>
+                            <option value="regional-nsw">Regional NSW</option>
+                            <option value="hunter-region">Hunter Region</option>
+                            <option value="illawarra-region">Illawarra Region</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Results Summary -->
+                <div class="results-summary">
+                    <div class="results-count">
+                        Showing <strong id="results-count">0</strong> of <strong id="total-count">0</strong> councils
+                    </div>
+                    <button class="clear-filters" id="clear-filters-btn" style="display: none;">
+                        Clear Filters
+                    </button>
                 </div>
             </div>
         </section>

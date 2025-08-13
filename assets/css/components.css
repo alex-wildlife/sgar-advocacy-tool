@@ -443,6 +443,218 @@
     box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
 }
 
+/* Professional Control Panel */
+.control-panel {
+    background: var(--gray-50);
+    padding: var(--space-6);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Enhanced Search Container */
+.search-container {
+    position: relative;
+    margin-bottom: var(--space-6);
+}
+
+.search-input {
+    width: 100%;
+    padding: var(--space-4) var(--space-12);
+    border: 2px solid var(--gray-300);
+    border-radius: var(--radius-full);
+    font-size: 1rem;
+    transition: all var(--transition-base);
+    background: white;
+    outline: none;
+}
+
+.search-input:hover {
+    border-color: var(--al-sage);
+}
+
+.search-input:focus {
+    border-color: var(--al-forest);
+    box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+}
+
+.search-input::placeholder {
+    color: var(--gray-400);
+}
+
+.search-icon {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Professional Filter Grid */
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.filter-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.filter-select {
+    padding: var(--space-3) var(--space-4);
+    padding-right: var(--space-10);
+    border: 2px solid var(--gray-300);
+    border-radius: var(--radius-md);
+    background: white;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-3) center;
+    background-size: 1.25rem;
+    outline: none;
+}
+
+.filter-select:hover {
+    border-color: var(--al-sage);
+}
+
+.filter-select:focus {
+    border-color: var(--al-forest);
+    box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+}
+
+/* Results Summary */
+.results-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--gray-200);
+    flex-wrap: wrap;
+    gap: var(--space-4);
+}
+
+.results-count {
+    font-size: 0.9375rem;
+    color: var(--gray-600);
+}
+
+.results-count strong {
+    color: var(--al-forest);
+    font-weight: 700;
+}
+
+.clear-filters {
+    padding: var(--space-2) var(--space-4);
+    background: white;
+    border: 2px solid var(--al-coral);
+    color: var(--al-coral);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    outline: none;
+}
+
+.clear-filters:hover {
+    background: var(--al-coral);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.clear-filters:focus {
+    box-shadow: 0 0 0 3px rgba(217, 116, 86, 0.2);
+}
+
+/* Responsive Design for Professional Controls */
+@media (max-width: 768px) {
+    .control-panel {
+        padding: var(--space-4);
+    }
+    
+    .search-container {
+        margin-bottom: var(--space-4);
+    }
+    
+    .search-input {
+        padding: var(--space-3) var(--space-10);
+        font-size: 0.9375rem;
+    }
+    
+    .search-icon {
+        left: var(--space-3);
+        width: 18px;
+        height: 18px;
+    }
+    
+    .filter-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+        margin-bottom: var(--space-3);
+    }
+    
+    .filter-select {
+        padding: var(--space-3);
+        padding-right: var(--space-8);
+        font-size: 0.875rem;
+    }
+    
+    .results-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+    
+    .clear-filters {
+        align-self: stretch;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .control-panel {
+        padding: var(--space-3);
+        margin: 0 -var(--space-md);
+    }
+    
+    .search-input {
+        padding: var(--space-2) var(--space-8);
+    }
+    
+    .search-icon {
+        left: var(--space-2);
+        width: 16px;
+        height: 16px;
+    }
+    
+    .filter-label {
+        font-size: 0.8125rem;
+    }
+    
+    .filter-select {
+        padding: var(--space-2);
+        padding-right: var(--space-6);
+        font-size: 0.8125rem;
+    }
+}
+
 /* Council Cards */
 .council-card {
     background: white;

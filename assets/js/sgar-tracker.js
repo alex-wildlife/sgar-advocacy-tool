@@ -74,6 +74,7 @@ export class SGARTracker {
         this.setupUnifiedSearch();
         this.setupViewToggle();
         this.setupPagination();
+        this.setupProfessionalFilters();
         this.initModalControls();
         
         // Set initial view to map
@@ -81,6 +82,9 @@ export class SGARTracker {
         
         // Initialize clear filters button visibility
         this.updateClearFiltersVisibility();
+        
+        // Initialize results counter
+        this.updateFilteredResultsCounter();
         
         // Handle responsive pagination
         window.addEventListener('resize', () => {
@@ -130,6 +134,9 @@ export class SGARTracker {
         const progressPercent = Math.round((stats.sgarFree / stats.total) * 100);
         const progressEl = document.getElementById('progress-bar');
         if (progressEl) progressEl.style.width = `${progressPercent}%`;
+        
+        // Update professional results counter
+        this.updateResultsCounter(stats.total, stats.total);
     }
 
     animateNumbers() {
@@ -239,8 +246,9 @@ export class SGARTracker {
                 this.mapController.applyFilter(this.filters);
             }
 
-            // Update clear filters button visibility
+            // Update clear filters button visibility and results counter
             this.updateClearFiltersVisibility();
+            this.updateFilteredResultsCounter();
         });
     }
 
@@ -834,7 +842,13 @@ export class SGARTracker {
             searchInput.value = '';
         }
 
-        // Reset filter buttons to "All" active state
+        // Reset professional dropdown selectors
+        const statusFilter = document.getElementById('status-filter');
+        const regionFilter = document.getElementById('region-filter');
+        if (statusFilter) statusFilter.value = 'all';
+        if (regionFilter) regionFilter.value = 'all';
+
+        // Reset filter buttons to "All" active state (for legacy compatibility)
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-filter') === 'all');
         });
@@ -847,8 +861,9 @@ export class SGARTracker {
             this.mapController.applyFilter(this.filters);
         }
 
-        // Hide clear filters button
+        // Hide clear filters button and update results counter
         this.updateClearFiltersVisibility();
+        this.updateFilteredResultsCounter();
     }
 
     updateClearFiltersVisibility() {
@@ -1004,5 +1019,65 @@ export class SGARTracker {
             document.removeEventListener('keydown', modal._escapeHandler);
             delete modal._escapeHandler;
         }
+    }
+
+    updateResultsCounter(showing, total) {
+        const resultsCountEl = document.getElementById('results-count');
+        const totalCountEl = document.getElementById('total-count');
+        
+        if (resultsCountEl) resultsCountEl.textContent = showing;
+        if (totalCountEl) totalCountEl.textContent = total;
+    }
+
+    setupProfessionalFilters() {
+        // Status filter dropdown
+        const statusFilter = document.getElementById('status-filter');
+        if (statusFilter) {
+            statusFilter.addEventListener('change', (e) => {
+                const value = e.target.value;
+                if (value === 'all') {
+                    this.filters.status = [];
+                } else {
+                    // Map dropdown values to internal status values
+                    const statusMap = {
+                        'using-sgars': ['Yes'],
+                        'sgar-free': ['No'], 
+                        'unknown': ['Unknown']
+                    };
+                    this.filters.status = statusMap[value] || [];
+                }
+                this.renderCouncils();
+                this.updateClearFiltersVisibility();
+                this.updateFilteredResultsCounter();
+            });
+        }
+
+        // Region filter dropdown
+        const regionFilter = document.getElementById('region-filter');
+        if (regionFilter) {
+            regionFilter.addEventListener('change', (e) => {
+                const value = e.target.value;
+                if (value === 'all') {
+                    this.filters.region = [];
+                } else {
+                    // Map dropdown values to internal region values
+                    const regionMap = {
+                        'sydney-metropolitan': ['Sydney Metropolitan'],
+                        'regional-nsw': ['Regional NSW'],
+                        'hunter-region': ['Hunter Region'],
+                        'illawarra-region': ['Illawarra Region']
+                    };
+                    this.filters.region = regionMap[value] || [value];
+                }
+                this.renderCouncils();
+                this.updateClearFiltersVisibility();
+                this.updateFilteredResultsCounter();
+            });
+        }
+    }
+
+    updateFilteredResultsCounter() {
+        const filteredCouncils = this.getFilteredCouncils();
+        this.updateResultsCounter(filteredCouncils.length, this.councils.length);
     }
 }
