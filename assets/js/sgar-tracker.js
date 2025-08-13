@@ -395,10 +395,15 @@ export class SGARTracker {
         const statusInfo = formatCouncilStatus(council.status);
         const statusClass = statusInfo.class;
         const statusIcon = statusInfo.icon;
+        
+        // Add wildlife impact indicator for councils using SGARs
+        const wildlifeIndicator = council.status === 'Yes' ? 
+            '<div class="wildlife-impact" title="Wildlife at Risk - Council uses SGARs">🦉</div>' : '';
 
         return `
             <article class="council-card ${statusClass}">
                 <div class="council-status-indicator"></div>
+                ${wildlifeIndicator}
                 <div class="council-card-header">
                     <h3 class="council-name">${council.name}</h3>
                     <span class="council-status ${statusClass}">

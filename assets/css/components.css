@@ -504,6 +504,24 @@
     background: linear-gradient(180deg, var(--warning), var(--warning-rgb));
 }
 
+/* Wildlife Impact Indicator */
+.wildlife-impact {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: #EB493A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 2;
+}
+
 .council-name {
     font-size: 1.25rem;
     font-weight: 700;
