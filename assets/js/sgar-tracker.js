@@ -31,7 +31,7 @@ class SGARTracker {
     document.getElementById('stat-unknown').setAttribute('data-count', stats.unknown);
     document.getElementById('stat-total').setAttribute('data-count', stats.total);
 
-    const percent = Math.round((stats.free / stats.total) * 100);
+    const percent = stats.total > 0 ? Math.round((stats.free / stats.total) * 100) : 0;
     document.getElementById('progress-percentage').textContent = `${percent}%`;
     document.getElementById('progress-bar').style.width = `${percent}%`;
   }
@@ -39,7 +39,7 @@ class SGARTracker {
   animateNumbers() {
     document.querySelectorAll('[data-count]').forEach(el => {
       const count = parseInt(el.getAttribute('data-count'));
-      let current = 0, step = count / 50;
+      let current = 0, step = Math.max(1, count / 50);
       const update = () => {
         current += step;
         if (current < count) {
@@ -147,14 +147,19 @@ class SGARTracker {
 }
 
 /* ============================
-   Initialise App
+   Initialise App with councils.json
 ============================ */
 document.addEventListener('DOMContentLoaded', () => {
-  // TODO: replace with real councils.json data
-  const data = [
-    { name: 'Sydney Council', status: 'Yes', wildlifeRisk: 'high' },
-    { name: 'Byron Council', status: 'No', wildlifeRisk: 'low' },
-    { name: 'Dubbo Council', status: 'Unknown', wildlifeRisk: 'low' }
-  ];
-  window.app = new SGARTracker(data);
+  fetch('data/councils.json')
+    .then(response => {
+      if (!response.ok) throw new Error(`Failed to load councils.json: ${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      window.app = new SGARTracker(data);
+    })
+    .catch(err => {
+      console.error('Error loading councils.json:', err);
+      window.app = new SGARTracker([]); // fallback empty dataset
+    });
 });
