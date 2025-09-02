@@ -118,6 +118,7 @@ class SGARTracker {
           <h3 class="council-name">${c.name}</h3>
           <span class="council-status">${c.status}</span>
         </div>
+        ${c.notes ? `<p class="council-notes">${c.notes}</p>` : ''}
       </article>
     `).join('');
   }
@@ -155,7 +156,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!response.ok) throw new Error(`Failed to load councils.json: ${response.status}`);
       return response.json();
     })
-    .then(data => {
+    .then(rawData => {
+      // Convert keyed object into array of council objects
+      const data = Object.entries(rawData).map(([name, details]) => ({
+        name,
+        status: details.sgars,
+        notes: details.notes,
+        email: details.email
+      }));
+      console.log(`Loaded ${data.length} councils from JSON`);
       window.app = new SGARTracker(data);
     })
     .catch(err => {
