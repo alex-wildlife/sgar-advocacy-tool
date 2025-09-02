@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NSW SGAR Wildlife Impact Map</title>
 
-  <!-- External CSS -->
+  <!-- Core CSS -->
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/map.css">
+
+  <!-- OpenLayers -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.5.2/ol.css">
+  <script src="https://cdn.jsdelivr.net/npm/ol@7.5.2/dist/ol.js"></script>
 </head>
 <body>
   <!-- TEST SITE BANNER -->
@@ -85,9 +90,7 @@
 
     <!-- Control Center (Search + Filters) -->
     <section class="control-center">
-      <div class="control-header">
-        <h2 class="control-title">Find Your Council</h2>
-      </div>
+      <h2 class="control-title">Find Your Council</h2>
       <div class="unified-search">
         <div class="search-wrapper">
           <span class="search-icon">🔍</span>

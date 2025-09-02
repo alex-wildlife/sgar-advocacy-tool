@@ -3,6 +3,7 @@ class SGARTracker {
     this.councils = data;
     this.currentView = 'grid';
     this.filters = { status: [], region: [], search: '', quickFilter: null };
+    this.map = null;
     this.init();
   }
 
@@ -14,6 +15,9 @@ class SGARTracker {
     this.renderCouncils();
   }
 
+  /* ============================
+     Stats + Progress
+  ============================ */
   updateStats() {
     const stats = {
       total: this.councils.length,
@@ -21,6 +25,7 @@ class SGARTracker {
       free: this.councils.filter(c => c.status === 'No').length,
       unknown: this.councils.filter(c => c.status === 'Unknown').length
     };
+
     document.getElementById('stat-using-sgars').setAttribute('data-count', stats.using);
     document.getElementById('stat-sgar-free').setAttribute('data-count', stats.free);
     document.getElementById('stat-unknown').setAttribute('data-count', stats.unknown);
@@ -48,10 +53,14 @@ class SGARTracker {
     });
   }
 
+  /* ============================
+     Unified Search
+  ============================ */
   setupUnifiedSearch() {
     const input = document.getElementById('searchInput');
-    const dropdown = document.getElementById('searchDropdown');
     const clearBtn = document.getElementById('searchClear');
+
+    if (!input) return;
 
     input.addEventListener('input', e => {
       this.filters.search = e.target.value.toLowerCase();
@@ -65,31 +74,42 @@ class SGARTracker {
       clearBtn.style.display = 'none';
       this.renderCouncils();
     });
-
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.unified-search')) dropdown.classList.remove('active');
-    });
   }
 
+  /* ============================
+     View Toggle
+  ============================ */
   setupViewToggle() {
     document.querySelectorAll('.view-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const view = btn.getAttribute('data-view');
         this.currentView = view;
+
         document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+
         document.getElementById('councilGrid').style.display = view === 'grid' ? 'grid' : 'none';
         document.getElementById('mapView').style.display = view === 'map' ? 'block' : 'none';
+
+        if (view === 'map' && !this.map) {
+          this.initMap();
+        }
       });
     });
   }
 
+  /* ============================
+     Councils Rendering
+  ============================ */
   renderCouncils() {
     const grid = document.getElementById('councilGrid');
+    if (!grid) return;
+
     const filtered = this.councils.filter(c => {
       if (this.filters.search && !c.name.toLowerCase().includes(this.filters.search)) return false;
       return true;
     });
+
     grid.innerHTML = filtered.map(c => `
       <article class="council-card ${c.status === 'Yes' ? 'danger' : c.status === 'No' ? 'success' : 'warning'}">
         <div class="council-status-indicator"></div>
@@ -101,10 +121,36 @@ class SGARTracker {
       </article>
     `).join('');
   }
+
+  /* ============================
+     Map Initialisation
+  ============================ */
+  initMap() {
+    try {
+      this.map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([147, -32]), // NSW approx center
+          zoom: 5
+        })
+      });
+    } catch (err) {
+      console.error("Map failed to initialise:", err);
+      document.getElementById('map').innerHTML = "<p>Map unavailable</p>";
+    }
+  }
 }
 
+/* ============================
+   Initialise App
+============================ */
 document.addEventListener('DOMContentLoaded', () => {
-  // TODO: replace with real data from councils.json
+  // TODO: replace with real councils.json data
   const data = [
     { name: 'Sydney Council', status: 'Yes', wildlifeRisk: 'high' },
     { name: 'Byron Council', status: 'No', wildlifeRisk: 'low' },
