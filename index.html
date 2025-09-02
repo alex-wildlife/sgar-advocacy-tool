@@ -83,12 +83,59 @@
       </div>
     </section>
 
+    <!-- Control Center (Search + Filters) -->
+    <section class="control-center">
+      <div class="control-header">
+        <h2 class="control-title">Find Your Council</h2>
+      </div>
+      <div class="unified-search">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" placeholder="Search by council, region, or status..." id="searchInput">
+          <button class="search-clear" id="searchClear"><span>✕</span></button>
+        </div>
+
+        <div class="active-filters" id="activeFilters" style="display:none;">
+          <span class="active-filters-label">Active filters:</span>
+          <div class="active-filter-tags" id="activeFilterTags"></div>
+          <button class="clear-all-filters" onclick="app.clearAllFilters()">Clear all</button>
+        </div>
+
+        <div class="search-dropdown" id="searchDropdown">
+          <!-- Quick Filters -->
+          <div class="dropdown-section">
+            <h4 class="dropdown-title">Quick Filters</h4>
+            <div class="quick-filter-grid">
+              <button class="quick-filter-item" onclick="app.applyQuickFilter('danger')">⚠️ Councils Using SGARs</button>
+              <button class="quick-filter-item" onclick="app.applyQuickFilter('success')">✅ SGAR-Free Councils</button>
+              <button class="quick-filter-item" onclick="app.applyQuickFilter('wildlife')">🦉 Wildlife Hotspots</button>
+              <button class="quick-filter-item" onclick="app.applyQuickFilter('recent')">📅 Recently Updated</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View Toggle -->
+    <div class="view-toggle">
+      <div class="view-toggle-bg" id="viewToggleBg"></div>
+      <button class="view-btn active" data-view="grid">📋 Grid View</button>
+      <button class="view-btn" data-view="map">🗺️ Map View</button>
+    </div>
+
     <!-- Council Grid -->
     <section class="council-grid" id="councilGrid"></section>
 
     <!-- Map -->
     <section id="mapView" style="display:none;">
       <div id="map"></div>
+      <div id="map-popup"></div>
+      <div class="map-legend">
+        <h4>SGAR Status</h4>
+        <div class="legend-item"><span class="legend-color" style="background:#EB493A;"></span> Yes</div>
+        <div class="legend-item"><span class="legend-color" style="background:#4CAF50;"></span> No</div>
+        <div class="legend-item"><span class="legend-color" style="background:#CCC;"></span> Unknown</div>
+      </div>
     </section>
   </div>
 
