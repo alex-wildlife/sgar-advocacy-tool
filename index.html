@@ -1,238 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NSW SGAR Wildlife Impact Map - Real-time Council Tracking</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦉</text></svg>">
-    
-    <!-- External CSS Dependencies -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@8.2.0/ol.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol-ext@4.0.0/dist/ol-ext.min.css">
-    
-    <!-- Application Stylesheets -->
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/layout.css">
-    <link rel="stylesheet" href="assets/css/components.css">
-    <link rel="stylesheet" href="assets/css/map.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NSW SGAR Wildlife Impact Map</title>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
 </head>
 <body>
-    <!-- TEST VERSION BANNER -->
-    <div style="position:fixed;top:10px;right:10px;
-                background:red;color:white;
-                padding:6px 12px;font-weight:bold;
-                border-radius:6px;z-index:9999;
-                box-shadow:0 2px 6px rgba(0,0,0,0.3);">
-        TEST SITE
-    </div>
+  <!-- TEST SITE BANNER -->
+  <div style="position:fixed;top:10px;right:10px;
+              background:red;color:white;
+              padding:6px 12px;font-weight:bold;
+              border-radius:6px;z-index:9999;">
+    TEST SITE
+  </div>
 
-    <header class="hero-section">
-        <div class="hero-content">
-            <h1>NSW Council <span>SGAR Impact Tracker</span></h1>
-            <p class="hero-subtitle">
-                Track real-time progress toward SGAR-free councils across NSW. 
-                Second Generation Anticoagulant Rodenticides pose severe risks to wildlife through secondary poisoning.
-            </p>
-        </div>
+  <div class="container">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-content">
+        <h1>NSW Council <span>SGAR Impact Tracker</span></h1>
+        <p class="hero-subtitle">Real-time monitoring of SGAR usage across NSW councils.</p>
+      </div>
     </header>
 
-    <main class="main-content">
-        <section class="stats-dashboard" id="stats-dashboard">
-            <div class="stats-grid">
-                <div class="stat-card stat-danger">
-                    <div class="stat-number" data-count="0" id="councils-using-sgars">0</div>
-                    <div class="stat-label">Councils Still Using SGARs</div>
-                </div>
-                <div class="stat-card stat-success">
-                    <div class="stat-number" data-count="0" id="sgar-free-councils">0</div>
-                    <div class="stat-label">SGAR-Free Councils</div>
-                </div>
-                <div class="stat-card stat-neutral">
-                    <div class="stat-number" data-count="0" id="unknown-status">0</div>
-                    <div class="stat-label">Status Unknown</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="progress-section">
-            <div class="progress-container">
-                <h2 class="progress-title">Progress to SGAR-Free NSW</h2>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progress-bar"></div>
-                </div>
-                <div class="progress-milestones">
-                    <div class="milestone">
-                        <div class="milestone-marker">🐾</div>
-                        <h4>25% SGAR-Free</h4>
-                        <p>Wildlife Protection Begins</p>
-                    </div>
-                    <div class="milestone">
-                        <div class="milestone-marker">🦉</div>
-                        <h4>50% SGAR-Free</h4>
-                        <p>Ecosystem Recovery</p>
-                    </div>
-                    <div class="milestone">
-                        <div class="milestone-marker">🌿</div>
-                        <h4>100% SGAR-Free</h4>
-                        <p>Complete Protection</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="controls-section control-panel">
-            <div class="controls-container">
-                <h2 class="control-title">Find Your Council</h2>
-                
-                <!-- Enhanced Search Container -->
-                <div class="search-container">
-                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                    <input 
-                        type="text" 
-                        id="council-search" 
-                        name="council-search"
-                        class="search-input" 
-                        placeholder="Search councils by name, region, or status..."
-                        autocomplete="off"
-                    >
-                </div>
-                
-                <!-- Professional Filter Grid -->
-                <div class="filter-grid">
-                    <div class="filter-group">
-                        <label class="filter-label">SGAR Status</label>
-                        <select class="filter-select" id="status-filter" data-filter-type="status">
-                            <option value="all">All Status Types</option>
-                            <option value="using-sgars">Using SGARs</option>
-                            <option value="sgar-free">SGAR-Free</option>
-                            <option value="unknown">Status Unknown</option>
-                        </select>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <label class="filter-label">Region</label>
-                        <select class="filter-select" id="region-filter" data-filter-type="region">
-                            <option value="all">All Regions</option>
-                            <!-- Regions will be dynamically populated by JavaScript -->
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- Results Summary -->
-                <div class="results-summary">
-                    <div class="results-count">
-                        Showing <strong id="results-count">0</strong> of <strong id="total-count">0</strong> councils
-                    </div>
-                    <button class="clear-filters" id="clear-filters-btn" style="display: none;">
-                        Clear Filters
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <section class="councils-section">
-            <div class="view-controls">
-                <button class="view-btn active" data-view="map" id="map-view-btn">
-                    <span>Map View</span>
-                </button>
-                <button class="view-btn" data-view="grid" id="grid-view-btn">
-                    <span>Grid View</span>
-                </button>
-                <button class="view-btn" data-view="list" id="list-view-btn">
-                    <span>List View</span>
-                </button>
-            </div>
-            <div class="councils-container" id="councils-container" style="display: none;">
-                <!-- Council cards will be dynamically generated here -->
-            </div>
-            
-            <!-- Pagination Controls (only visible for Grid View) -->
-            <div class="pagination-section" id="pagination-section" style="display: none;">
-                <div class="pagination-info">
-                    <span id="pagination-counter"></span>
-                </div>
-                <div class="pagination-controls">
-                    <button class="pagination-btn" id="prev-page" aria-label="Previous page">
-                        &#8249;
-                    </button>
-                    <div class="page-numbers" id="page-numbers">
-                        <!-- Page numbers will be generated here -->
-                    </div>
-                    <button class="pagination-btn" id="next-page" aria-label="Next page">
-                        &#8250;
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <section class="map-section" id="map-section">
-            <h2>Interactive NSW Council Map</h2>
-            <div class="map-container">
-                <div id="map" class="map"></div>
-                <div class="map-legend">
-                    <!-- Legend will be populated by MapController -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Map Popup -->
-        <div id="map-popup" class="ol-popup" style="display: none;"></div>
-
-        <!-- Action Modal -->
-        <div id="actionModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="modal-close-button">&times;</span>
-                <div id="actionNetworkEmbedContainer">
-                    <!-- Action Network embed will be loaded here -->
-                </div>
-            </div>
+    <!-- Impact Banner -->
+    <section class="impact-banner">
+      <div class="impact-content">
+        <div class="impact-stat">
+          <span class="impact-number" data-count="350">0</span>
+          <span class="impact-label">Native Species at Risk</span>
         </div>
-
-        <!-- Council Details Modal -->
-        <div id="councilDetailsModal" class="modal details-modal" style="display: none;">
-            <div class="modal-overlay"></div>
-            <div class="modal-content details-modal-content">
-                <button class="modal-close-button details-close-btn" aria-label="Close details modal">&times;</button>
-                <div id="councilDetailsContainer">
-                    <!-- Council details will be populated here -->
-                </div>
-            </div>
+        <div class="impact-visual">
+          <div class="species-icon">🦅</div>
+          <div class="species-icon">🦉</div>
+          <div class="species-icon">🐍</div>
+          <div class="species-icon">🐸</div>
         </div>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>Data updated: <span id="last-updated">January 2025</span></p>
-            <p>Advocating for wildlife-safe pest management across NSW councils</p>
+        <div class="impact-stat">
+          <span class="impact-number" data-count="92">0</span>
+          <span class="impact-label">% Powerful Owls Contaminated</span>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <!-- External JavaScript Dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/ol@8.2.0/dist/ol.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ol-ext@4.0.0/dist/ol-ext.min.js"></script>
-    
-    <!-- Council Data Loading -->
-    <script>
-        // Load council data and make it globally available for ES6 modules
-        window.councilDataPromise = fetch('./data/councils.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .catch(error => {
-                console.error('Failed to load council data:', error);
-                return {};
-            });
-    </script>
-    
-    <!-- Application JavaScript Modules -->
-    <script type="module" src="assets/js/main.js"></script>
+    <!-- Stats Dashboard -->
+    <section class="stats-dashboard">
+      <div class="stat-card danger">
+        <div class="stat-icon">⚠️</div>
+        <div class="stat-value" id="stat-using-sgars">0</div>
+        <div class="stat-label">Councils Still Using SGARs</div>
+      </div>
+      <div class="stat-card success">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value" id="stat-sgar-free">0</div>
+        <div class="stat-label">SGAR-Free Councils</div>
+      </div>
+      <div class="stat-card warning">
+        <div class="stat-icon">🔍</div>
+        <div class="stat-value" id="stat-unknown">0</div>
+        <div class="stat-label">Under Investigation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📍</div>
+        <div class="stat-value" id="stat-total">0</div>
+        <div class="stat-label">Total Councils Audited</div>
+      </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="progress-section">
+      <div class="progress-header">
+        <h2 class="progress-title">Progress to SGAR-Free NSW</h2>
+        <span class="progress-percentage" id="progress-percentage">0%</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </section>
+
+    <!-- Council Grid -->
+    <section class="council-grid" id="councilGrid"></section>
+
+    <!-- Map -->
+    <section id="mapView" style="display:none;">
+      <div id="map"></div>
+    </section>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="assets/js/sgar-tracker.js"></script>
 </body>
 </html>
